@@ -1,4 +1,5 @@
-FROM meteor-base
+# The tag here should match the Meteor version of your app, per .meteor/release
+FROM geoffreybooth/meteor-base:1.7.0.3
 
 # Copy app package.json and package-lock.json into container
 COPY ./app/package*.json $APP_SOURCE_FOLDER/
@@ -11,6 +12,7 @@ COPY ./app $APP_SOURCE_FOLDER/
 RUN bash $SCRIPTS_FOLDER/build-meteor-bundle.sh
 
 
+# Rather than Node 8 latest (Alpine), you can also use the specific version of Node expected by your Meteor release, per https://docs.meteor.com/changelog.html
 FROM node:8-alpine
 
 ENV APP_BUNDLE_FOLDER /opt/bundle
