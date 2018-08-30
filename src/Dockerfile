@@ -1,7 +1,7 @@
 # Based on:
 # - https://github.com/jshimko/meteor-launchpad/blob/master/Dockerfile
 # - https://github.com/meteor/galaxy-images/blob/master/ubuntu/Dockerfile
-FROM ubuntu
+FROM mhart/alpine-node:8.11.4
 
 # Default Meteor version if not defined at build time; see ../build.sh
 ARG METEOR_VERSION=1.6
@@ -11,9 +11,16 @@ ENV APP_SOURCE_FOLDER /opt/src
 ENV APP_BUNDLE_FOLDER /opt/bundle
 
 # Install dependencies, based on https://github.com/jshimko/meteor-launchpad/blob/master/scripts/install-deps.sh (only the parts we plan to use)
-RUN apt-get update && \
-	apt-get install --assume-yes apt-transport-https ca-certificates && \
-	apt-get install --assume-yes --no-install-recommends build-essential bsdtar bzip2 curl git python
+RUN apk add --no-cache \
+	bash \
+	build-base \
+	bzip2 \
+	ca-certificates \
+	curl \
+	tar \
+	git \
+	python \
+	libarchive-tools
 
 # Install Meteor
 RUN curl https://install.meteor.com --output /tmp/install-meteor.sh && \
@@ -31,6 +38,13 @@ ENV METEOR_ALLOW_SUPERUSER true
 
 # Copy entrypoint and dependencies
 COPY ./docker $SCRIPTS_FOLDER/
+
+# Meteor bundles its own version of `node`, however it is not Alpine-based,
+# so copy over the one from the system $PATH instead.
+RUN bundled="$(find ~/.meteor/ -name node -type f)" && \
+  cp "$(which node)" "$bundled" && \
+  cd "$(dirname "$bundled")/../lib" && \
+  npm rebuild fibers --build-from-source
 
 # Install entrypoint dependencies
 RUN cd $SCRIPTS_FOLDER && \
