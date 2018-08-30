@@ -39,6 +39,13 @@ ENV METEOR_ALLOW_SUPERUSER true
 # Copy entrypoint and dependencies
 COPY ./docker $SCRIPTS_FOLDER/
 
+# Meteor bundles its own version of `node`, however it is not Alpine-based,
+# so copy over the one from the system $PATH instead.
+RUN bundled="$(find ~/.meteor/ -name node -type f)" && \
+  cp "$(which node)" "$bundled" && \
+  cd "$(dirname "$bundled")/../lib" && \
+  npm rebuild fibers --build-from-source
+
 # Install entrypoint dependencies
 RUN cd $SCRIPTS_FOLDER && \
 	meteor npm install
