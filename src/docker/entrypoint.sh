@@ -17,7 +17,9 @@ require('p-wait-for')(function() {
 			resolve(successfullyConnected);
 		});
 	});
-}, 1000);
+}, 1000).then(function() {
+        process.exit(0);
+});
 EOJS
 
 echo 'Starting app...'
