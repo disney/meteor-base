@@ -1,8 +1,5 @@
 # Versions to build this Docker image for
 meteor_versions=( \
-	'1.6' \
-	'1.6.0.1' \
-	'1.6.1' \
 	'1.6.1.1' \
 	# '1.6.1.2' \ # https://github.com/meteor/meteor/issues/10038
 	# '1.6.1.3' \

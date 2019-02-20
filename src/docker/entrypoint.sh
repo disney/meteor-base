@@ -17,10 +17,17 @@ require('p-wait-for')(function() {
 			resolve(successfullyConnected);
 		});
 	});
-}, 1000);
+}, 1000).then(function() {
+        process.exit(0);
+});
 EOJS
 
 echo 'Starting app...'
+
+if [ -n "$METEOR_SETTINGS_PATH" ]; then
+    export METEOR_SETTINGS=$(cat $METEOR_SETTINGS_PATH)
+fi
+
 cd $APP_BUNDLE_FOLDER/bundle
 
 exec "$@"

@@ -15,10 +15,9 @@ source ./versions.sh
 
 for version in "${meteor_versions[@]}"; do
 	printf "${GREEN}Building Docker base image for Meteor ${version}...${NC}\n"
-	if ! docker build --build-arg "METEOR_VERSION=${version}" --tag geoffreybooth/meteor-base:"${version}" ./src; then
+	if ! docker build --build-arg "METEOR_VERSION=${version}" --tag gee-docker.mtnsat.io/meteor-base:"${version}" ./src; then
 		printf "${RED}Error building Docker base image for Meteor ${version}${NC}\n"
 		exit 1
 	fi
 done
-docker tag geoffreybooth/meteor-base:"${version}" geoffreybooth/meteor-base:latest
 printf "${GREEN}Success building Docker base images for all supported Meteor versions\n"
