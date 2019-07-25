@@ -16,9 +16,7 @@ RUN apt-get update && \
 	apt-get install --assume-yes --no-install-recommends build-essential bsdtar bzip2 curl git python
 
 # Install Meteor
-RUN curl https://install.meteor.com --output /tmp/install-meteor.sh && \
-	# Set the release version in the install script
-	sed --in-place "s/RELEASE=.*/RELEASE=\"$METEOR_VERSION\"/g" /tmp/install-meteor.sh && \
+RUN curl https://install.meteor.com/?release=$METEOR_VERSION --output /tmp/install-meteor.sh && \
 	# Replace tar with bsdtar in the install script; https://github.com/jshimko/meteor-launchpad/issues/39
 	sed --in-place "s/tar -xzf.*/bsdtar -xf \"\$TARBALL_FILE\" -C \"\$INSTALL_TMPDIR\"/g" /tmp/install-meteor.sh && \
 	# Install Meteor
