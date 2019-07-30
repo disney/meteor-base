@@ -18,7 +18,7 @@ FROM node:8-alpine
 ENV APP_BUNDLE_FOLDER /opt/bundle
 ENV SCRIPTS_FOLDER /docker
 
-# Runtime dependencies; if your dependencies need compilation (such as native modules) see app-with-native-dependencies.dockerfile
+# Runtime dependencies; if your dependencies need compilation (native modules such as bcrypt) or you are using Meteor <1.8.1, use app-with-native-dependencies.dockerfile instead
 RUN apk --no-cache add \
 		bash \
 		ca-certificates

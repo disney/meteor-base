@@ -8,7 +8,15 @@ This repo contains a base Docker image for use by [Meteor](https://www.meteor.co
 
 ## Quickstart
 
-Copy `example/default.dockerfile` (or `example/app-with-native-dependencies.dockerfile` if your app has native dependencies that require compilation or if your app is using a version of Meteor older than 1.8.1) into the root of your project and rename it `Dockerfile`. This file assumes that your Meteor app is one level down from the root in a folder named `app`; either move your app there, or edit `Dockerfile` to point to your desired path (or the root of your project). Leave `Dockerfile` at the root.
+Copy `example/default.dockerfile` (or `example/app-with-native-dependencies.dockerfile` if your app has native dependencies that require compilation such as `bcrypt`, or if your app is using a version of Meteor older than 1.8.1) into the root of your project and rename it `Dockerfile`. This file assumes that your Meteor app is one level down from the root in a folder named `app`; either move your app there, or edit `Dockerfile` to point to your desired path (or the root of your project). Leave `Dockerfile` at the root.
+
+Edit the `Dockerfile` you copied into your project, changing the first line so that the numbers at the end match the version of Meteor of your project. For example:
+
+```Dockerfile
+FROM containerregistry.disney.com/wdi-shared/meteor-base:1.8.1
+```
+
+if your project is running under Meteor 1.8.1. See your app’s `.meteor/release` file to get its Meteor release version. This version must match an available tag from [disney/meteor-base](https://cloud.docker.com/repository/docker/geoffreybooth/meteor-base/tags).
 
 Also copy in `example/.dockerignore` and `example/docker-compose.yml` to your project’s root. Then, from the root of your project:
 

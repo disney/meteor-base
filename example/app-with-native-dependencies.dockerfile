@@ -34,7 +34,7 @@ COPY --from=0 $SCRIPTS_FOLDER $SCRIPTS_FOLDER/
 # Copy in app bundle
 COPY --from=0 $APP_BUNDLE_FOLDER/bundle $APP_BUNDLE_FOLDER/bundle/
 
-RUN bash $SCRIPTS_FOLDER/build-meteor-npm-dependencies.sh \
+RUN bash $SCRIPTS_FOLDER/build-meteor-npm-dependencies.sh --build-from-source \
 	&& apk del .node-gyp-compilation-dependencies
 
 # Start app
