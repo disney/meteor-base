@@ -3,8 +3,8 @@
 # - https://github.com/meteor/galaxy-images/blob/master/ubuntu/Dockerfile
 FROM ubuntu
 
-# Default Meteor version if not defined at build time; see ../build.sh
-ARG METEOR_VERSION=1.6
+# Meteor version to build for; see ../build.sh
+ARG METEOR_VERSION
 
 ENV SCRIPTS_FOLDER /docker
 ENV APP_SOURCE_FOLDER /opt/src
