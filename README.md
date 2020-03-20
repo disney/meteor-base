@@ -39,3 +39,13 @@ There are several great Meteor Docker images out there. We built this one becaus
 - [meteor/galaxy-images](https://github.com/meteor/galaxy-images) and [Treecom/meteor-alpine](https://github.com/Treecom/alpine-meteor) both require building the Meteor app in the host machine, before copying the built app into the Docker container. We wanted to avoid needing Node and Meteor installed on our CI servers, and we want the predictability of building within the Docker environment.
 
 Other projects I looked at generally had one or more of the disadvantages cited above. Multistage Docker builds have only been possible since Docker 17.05, which came out in May 2017, and most projects on the Web were designed before then and therefore don’t take advantage of the possibilities offered by a multistage architecture.
+
+## Test
+
+```bash
+# Build all images
+./build.sh
+
+# Test all images (requires Node, uses Puppeteer which will download headless Chrome)
+./test.sh
+```
