@@ -18,13 +18,8 @@ FROM node:12.16.1-alpine
 ENV APP_BUNDLE_FOLDER /opt/bundle
 ENV SCRIPTS_FOLDER /docker
 
-# Install OS build dependencies, which we remove later after we’ve compiled native Node extensions
-RUN apk --no-cache --virtual .node-gyp-compilation-dependencies add \
-		g++ \
-		make \
-		python \
-	# And runtime dependencies, which we keep
-	&& apk --no-cache add \
+# Install runtime dependencies
+RUN apk --no-cache add \
 		bash \
 		ca-certificates
 
@@ -34,8 +29,16 @@ COPY --from=0 $SCRIPTS_FOLDER $SCRIPTS_FOLDER/
 # Copy in app bundle
 COPY --from=0 $APP_BUNDLE_FOLDER/bundle $APP_BUNDLE_FOLDER/bundle/
 
-RUN bash $SCRIPTS_FOLDER/build-meteor-npm-dependencies.sh --build-from-source \
-	&& apk del .node-gyp-compilation-dependencies
+# Need to rebuild native dependencies, as the libcs are not compatible
+# between both images. Do that in a single RUN step so as not to
+# burden the layer with the Alpine compilation suite.
+RUN set -e -x; \
+    apk --no-cache --virtual .node-gyp-compilation-dependencies add \
+		g++ \
+		make \
+		python ; \
+    bash $SCRIPTS_FOLDER/build-meteor-npm-dependencies.sh --build-from-source ; \
+    apk del .node-gyp-compilation-dependencies
 
 # Start app
 ENTRYPOINT ["/docker/entrypoint.sh"]
