@@ -23,7 +23,9 @@ run_with_suppressed_output () {
 
 source ./versions.sh
 
-if [[ "${1-x}" != x ]]; then
+if [ -n "$CI_VERSION" ]; then
+	meteor_versions=( "$CI_VERSION" )
+elif [[ "${1-x}" != x ]]; then
 	meteor_versions=( "$1" )
 fi
 

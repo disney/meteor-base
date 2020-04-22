@@ -13,6 +13,12 @@ NC='\033[0m'
 
 source ./versions.sh
 
+if [ -n "$CI_VERSION" ]; then
+	meteor_versions=( "$CI_VERSION" )
+elif [[ "${1-x}" != x ]]; then
+	meteor_versions=( "$1" )
+fi
+
 for version in "${meteor_versions[@]}"; do
 	printf "${GREEN}Building Docker base image for Meteor ${version}...${NC}\n"
 	if ! docker build --build-arg "METEOR_VERSION=${version}" --tag geoffreybooth/meteor-base:"${version}" ./src; then
