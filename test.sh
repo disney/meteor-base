@@ -21,9 +21,18 @@ run_with_suppressed_output () {
 }
 
 
+do_sed () {
+	if [ "$(uname)" == "Darwin" ]; then # Mac
+		sed -i '' -e "$1" "$2"
+	else # Linux
+		sed --in-place "$1" "$2"
+	fi
+}
+
+
 source ./versions.sh
 
-if [ -n "$CI_VERSION" ]; then
+if [ -n "${CI_VERSION:-}" ]; then
 	meteor_versions=( "$CI_VERSION" )
 elif [[ "${1-x}" != x ]]; then
 	meteor_versions=( "$1" )
@@ -70,12 +79,12 @@ for version in "${meteor_versions[@]}"; do
 	fi
 
 	cp "${dockerfile}" test.dockerfile
-	sed -i '' "s|FROM geoffreybooth/meteor-base:.*|FROM geoffreybooth/meteor-base:${version}|" test.dockerfile
-	sed -i '' "s|FROM node:.*|FROM node:${node_version}-alpine|" test.dockerfile
-	sed -i '' "s|/app|/test-app|g" test.dockerfile
+	do_sed "s|FROM geoffreybooth/meteor-base:.*|FROM geoffreybooth/meteor-base:${version}|" test.dockerfile
+	do_sed "s|FROM node:.*|FROM node:${node_version}-alpine|" test.dockerfile
+	do_sed "s|/app|/test-app|g" test.dockerfile
 
 	cp docker-compose.yml test.docker-compose.yml
-	sed -i '' 's|dockerfile: Dockerfile|dockerfile: test.dockerfile|' test.docker-compose.yml
+	do_sed 's|dockerfile: Dockerfile|dockerfile: test.dockerfile|' test.docker-compose.yml
 
 	echo 'Building test app Docker image...'
 	run_with_suppressed_output 'docker-compose --file test.docker-compose.yml build'
