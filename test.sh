@@ -119,12 +119,14 @@ for version in "${meteor_versions[@]}"; do
 		printf "${GREEN}PASS for geoffreybooth/meteor-base:${version}${NC} after ${elapsed}\n"
 	fi
 
-	run_with_suppressed_output 'docker-compose --file test.docker-compose.yml down'
-	run_with_suppressed_output 'docker rmi example_app:latest'
+	if [ "${SKIP_CLEANUP:-}" != 1 ]; then
+		run_with_suppressed_output 'docker-compose --file test.docker-compose.yml down'
+		run_with_suppressed_output 'docker rmi example_app:latest'
 
-	rm -f test.dockerfile
-	rm -f test.docker-compose.yml
-	rm -rf test-app
+		rm -f test.dockerfile
+		rm -f test.docker-compose.yml
+		rm -rf test-app
+	fi
 done
 
 if $at_least_one_failure ; then

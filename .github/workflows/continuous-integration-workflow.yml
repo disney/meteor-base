@@ -49,3 +49,4 @@ jobs:
       run: ./test.sh
       env:
         CI_VERSION: ${{ matrix.version }}
+        SKIP_CLEANUP: 1
