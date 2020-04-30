@@ -107,7 +107,7 @@ for version in "${meteor_versions[@]}"; do
 	echo 'Running test...'
 	if [ ! -d ../test/node_modules ]; then
 		cd ../test
-		npm install
+		run_with_suppressed_output 'npm install'
 		cd ../example
 	fi
 	run_with_suppressed_output 'node ../test/test.js' || true # Don’t exit if tests fail

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "Automated tests for meteor-base Docker image",
   "scripts": {
-    "test": "node test.js"
+    "test": "TAKE_SCREENSHOT=1 node test.js"
   },
   "repository": {
     "type": "git",
