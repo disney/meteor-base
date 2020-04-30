@@ -1,0 +1,21 @@
+{
+  "name": "meteor-base-test",
+  "version": "0.0.0",
+  "description": "Automated tests for meteor-base Docker image",
+  "scripts": {
+    "test": "TAKE_SCREENSHOT=1 node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/disney/meteor-base.git"
+  },
+  "author": "Geoffrey Booth <webmaster@geoffreybooth.com>",
+  "license": "SEE LICENSE IN ../LICENSE",
+  "bugs": {
+    "url": "https://github.com/disney/meteor-base/issues"
+  },
+  "homepage": "https://github.com/disney/meteor-base#readme",
+  "dependencies": {
+    "puppeteer": "^2.1.1"
+  }
+}
