@@ -31,8 +31,8 @@ ENV METEOR_ALLOW_SUPERUSER true
 # Copy entrypoint and dependencies
 COPY ./docker $SCRIPTS_FOLDER/
 
-# Install entrypoint dependencies
+# Install Docker entrypoint dependencies
 RUN cd $SCRIPTS_FOLDER && \
-	meteor npm install
+	meteor npm ci || meteor npm install
 
 # No ONBUILD lines, because this is intended to be used by your app’s multistage Dockerfile and you might need control of the sequence of steps using files from this image
