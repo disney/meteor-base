@@ -14,9 +14,10 @@ NC='\033[0m'
 exit_code=0 # Keep global, so that code below can get return value of this function
 run_with_suppressed_output () {
 	exit_code=0
-	local logs=$(eval "$1 2>&1") || exit_code=$?
+	logs=$(eval "$1 2>&1") || exit_code=$?
 	if [ $exit_code -ne 0 ]; then
 		echo "$logs"
+		exit $exit_code
 	fi
 }
 
