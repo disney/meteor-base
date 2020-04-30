@@ -63,19 +63,19 @@ for version in "${meteor_versions[@]}"; do
 	fi
 
 	echo 'Creating test app...'
-	run_with_suppressed_output "meteor create --release=${version} test-app"
+	run_with_suppressed_output "docker run --rm --volume ${PWD}:/opt/tmp --workdir /opt/tmp geoffreybooth/meteor-base:${version} meteor create --release=${version} test-app"
 
 	if [[ "${version}" == 1.6.1* ]] || [[ "${version}" == 1.7 ]] || [[ "${version}" == 1.7.0* ]]; then
 		echo 'Fixing Babel dependency...'
 		cd ./test-app
-		run_with_suppressed_output 'meteor npm install --save-exact @babel/runtime@7.0.0-beta.55'
+		run_with_suppressed_output "docker run --rm --volume ${PWD}:/opt/tmp --workdir /opt/tmp geoffreybooth/meteor-base:${version} meteor npm install --save-exact @babel/runtime@7.0.0-beta.55"
 		cd ..
 	fi
 
 	if [[ "${version}" == 1.8* ]]; then
 		echo 'Fixing jQuery dependency...'
 		cd ./test-app
-		run_with_suppressed_output 'meteor npm install jquery'
+		run_with_suppressed_output "docker run --rm --volume ${PWD}:/opt/tmp --workdir /opt/tmp geoffreybooth/meteor-base:${version} meteor npm install jquery"
 		cd ..
 	fi
 
@@ -110,7 +110,7 @@ for version in "${meteor_versions[@]}"; do
 		npm install
 		cd ../example
 	fi
-	run_with_suppressed_output 'node ../test/test.js'
+	run_with_suppressed_output 'node ../test/test.js' || true # Don’t exit if tests fail
 	elapsed="$((($SECONDS / 60) % 60)) min $(($SECONDS % 60)) sec"
 	if [ $exit_code -ne 0 ]; then
 		printf "${RED}FAIL for geoffreybooth/meteor-base:${version}${NC} after ${elapsed}\n"
