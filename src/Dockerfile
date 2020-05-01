@@ -31,8 +31,12 @@ ENV METEOR_ALLOW_SUPERUSER true
 # Copy entrypoint and dependencies
 COPY ./docker $SCRIPTS_FOLDER/
 
-# Install Docker entrypoint dependencies
+# Install Docker entrypoint dependencies; npm ci was added in npm 5.7.0, and therefore available only to Meteor 1.7+
 RUN cd $SCRIPTS_FOLDER && \
-	meteor npm ci || meteor npm install
+	if bash -c "if [[ ${METEOR_VERSION} == 1.6* ]]; then exit 0; else exit 1; fi"; then \
+		meteor npm install; \
+	else \
+		meteor npm ci; \
+	fi
 
 # No ONBUILD lines, because this is intended to be used by your app’s multistage Dockerfile and you might need control of the sequence of steps using files from this image
