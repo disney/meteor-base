@@ -18,15 +18,12 @@ FROM node:12.16.1-alpine
 ENV APP_BUNDLE_FOLDER /opt/bundle
 ENV SCRIPTS_FOLDER /docker
 
-# Install OS build dependencies, which we remove later after we’ve compiled native Node extensions
-RUN apk --no-cache --virtual .node-gyp-compilation-dependencies add \
-		g++ \
-		make \
-		python \
-	# And runtime dependencies, which we keep
-	&& apk --no-cache add \
-		bash \
-		ca-certificates
+# Install OS build dependencies, which stay with this intermediate image but don’t become part of the final published image
+RUN apk --no-cache add \
+	bash \
+	g++ \
+	make \
+	python
 
 # Copy in entrypoint
 COPY --from=0 $SCRIPTS_FOLDER $SCRIPTS_FOLDER/
@@ -34,8 +31,26 @@ COPY --from=0 $SCRIPTS_FOLDER $SCRIPTS_FOLDER/
 # Copy in app bundle
 COPY --from=0 $APP_BUNDLE_FOLDER/bundle $APP_BUNDLE_FOLDER/bundle/
 
-RUN bash $SCRIPTS_FOLDER/build-meteor-npm-dependencies.sh --build-from-source \
-	&& apk del .node-gyp-compilation-dependencies
+RUN bash $SCRIPTS_FOLDER/build-meteor-npm-dependencies.sh --build-from-source
+
+
+# Start another Docker stage, so that the final image doesn’t contain the layer with the build dependencies
+# See previous FROM line; this must match
+FROM node:12.16.1-alpine
+
+ENV APP_BUNDLE_FOLDER /opt/bundle
+ENV SCRIPTS_FOLDER /docker
+
+# Install OS runtime dependencies
+RUN apk --no-cache add \
+	bash \
+	ca-certificates
+
+# Copy in entrypoint with the built and installed dependencies from the previous image
+COPY --from=1 $SCRIPTS_FOLDER $SCRIPTS_FOLDER/
+
+# Copy in app bundle with the built and installed dependencies from the previous image
+COPY --from=1 $APP_BUNDLE_FOLDER/bundle $APP_BUNDLE_FOLDER/bundle/
 
 # Start app
 ENTRYPOINT ["/docker/entrypoint.sh"]

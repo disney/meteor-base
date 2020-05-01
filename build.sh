@@ -41,7 +41,7 @@ for version in "${meteor_versions[@]}"; do
 	fi
 done
 
-if [ building_all_versions = true ]; then
+if [[ $building_all_versions ]]; then
 	docker tag geoffreybooth/meteor-base:"${version}" geoffreybooth/meteor-base:latest
 	printf "${GREEN}Success building Docker base images for all supported Meteor versions\n"
 else
