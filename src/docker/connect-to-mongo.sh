@@ -4,7 +4,7 @@ set -o errexit
 
 cd $SCRIPTS_FOLDER
 
-if [ -n "${MONGO_URL:-}" ]; then # Check for MongoDB connection if MONDO_URL is set
+if [ -n "${MONGO_URL:-}" ]; then # Check for MongoDB connection if MONGO_URL is set
 	# Poll until we can successfully connect to MongoDB
 	echo 'Connecting to MongoDB...'
 	node <<- 'EOJS'
