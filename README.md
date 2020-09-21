@@ -13,10 +13,10 @@ Copy `example/default.dockerfile` (or `example/app-with-native-dependencies.dock
 Edit the `Dockerfile` you copied into your project, changing the first line so that the numbers at the end match the version of Meteor of your project. For example:
 
 ```Dockerfile
-FROM geoffreybooth/meteor-base:1.11
+FROM geoffreybooth/meteor-base:1.11.1
 ```
 
-if your project is running under Meteor 1.11. See your app’s `.meteor/release` file to get its Meteor release version. This version must match an available tag from [disney/meteor-base](https://cloud.docker.com/repository/docker/geoffreybooth/meteor-base/tags).
+if your project is running under Meteor 1.11.1. See your app’s `.meteor/release` file to get its Meteor release version. This version must match an available tag from [disney/meteor-base](https://cloud.docker.com/repository/docker/geoffreybooth/meteor-base/tags).
 
 If necessary, update version in the `FROM node` line to use the Node version appropriate for your release of Meteor. From your application folder, you can get this version via the following command:
 
