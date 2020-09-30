@@ -1,7 +1,7 @@
 # Based on:
 # - https://github.com/jshimko/meteor-launchpad/blob/master/Dockerfile
 # - https://github.com/meteor/galaxy-images/blob/master/ubuntu/Dockerfile
-FROM ubuntu:18.04.5
+FROM ubuntu:18.04
 
 # Meteor version to build for; see ../build.sh
 ARG METEOR_VERSION
