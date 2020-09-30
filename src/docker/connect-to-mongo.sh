@@ -8,9 +8,12 @@ if [ -n "${MONGO_URL:-}" ]; then # Check for MongoDB connection if MONGO_URL is 
 	# Poll until we can successfully connect to MongoDB
 	echo 'Connecting to MongoDB...'
 	node <<- 'EOJS'
-	const mongoClient = require('mongodb').MongoClient;
-	setInterval(function() {
-		mongoClient.connect(process.env.MONGO_URL, function(err, client) {
+	const mongoDb = require("mongodb");
+	const mongoClient = new mongoDb.MongoClient(process.env.MONGO_URL, {
+		useUnifiedTopology: true,
+	});
+	setInterval(function () {
+		mongoClient.connect(function (err, client) {
 			if (client) {
 				client.close();
 			}
