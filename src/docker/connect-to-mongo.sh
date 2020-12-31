@@ -12,6 +12,7 @@ if [ -n "${MONGO_URL:-}" ]; then # Check for MongoDB connection if MONGO_URL is 
 	setInterval(function() {
 		mongoClient.connect(process.env.MONGO_URL, function(err, client) {
 			if (client) {
+				console.log('Successfully connected to MongoDB');
 				client.close();
 			}
 			if (err) {
