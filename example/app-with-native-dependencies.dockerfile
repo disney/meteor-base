@@ -13,7 +13,7 @@ RUN bash $SCRIPTS_FOLDER/build-meteor-bundle.sh
 
 
 # Use the specific version of Node expected by your Meteor release, per https://docs.meteor.com/changelog.html; this is expected for Meteor 2.0
-FROM node:12.20.1-alpine
+FROM node:12.21.0-alpine
 
 ENV APP_BUNDLE_FOLDER /opt/bundle
 ENV SCRIPTS_FOLDER /docker
@@ -36,7 +36,7 @@ RUN bash $SCRIPTS_FOLDER/build-meteor-npm-dependencies.sh --build-from-source
 
 # Start another Docker stage, so that the final image doesn’t contain the layer with the build dependencies
 # See previous FROM line; this must match
-FROM node:12.20.1-alpine
+FROM node:12.21.0-alpine
 
 ENV APP_BUNDLE_FOLDER /opt/bundle
 ENV SCRIPTS_FOLDER /docker
