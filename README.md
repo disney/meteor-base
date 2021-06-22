@@ -8,7 +8,11 @@ This repo contains a base Docker image for use by [Meteor](https://www.meteor.co
 
 ## Quickstart
 
+### Step #1 - Bootstrap Dockerfile from template
+
 Copy `example/default.dockerfile` (or `example/app-with-native-dependencies.dockerfile` if your app has native dependencies that require compilation such as `bcrypt`, or if your app is using a version of Meteor older than 1.8.1) into the root of your project and rename it `Dockerfile`. This file assumes that your Meteor app is one level down from the root in a folder named `app`; either move your app there, or edit `Dockerfile` to point to your desired path (or the root of your project). Leave `Dockerfile` at the root.
+
+### Step #2 - Ensure the Meteor version is the one you want
 
 Edit the `Dockerfile` you copied into your project, changing the first line so that the numbers at the end match the version of Meteor of your project. For example:
 
@@ -24,7 +28,13 @@ If necessary, update version in the `FROM node` line to use the Node version app
 docker run --rm geoffreybooth/meteor-base:$(cat ./.meteor/release | cut -c8-99) meteor node --version | cut -c2-99 | grep -o "[0-9\.]*"
 ```
 
-Also copy in `example/.dockerignore` and `example/docker-compose.yml` to your project’s root. Then, from the root of your project:
+### Step #3 - Setup your .dockerignore accordingly to speed up builds
+
+Also copy in `example/.dockerignore`
+
+### Step #4 - Use Docker Compose to ease your workflow
+
+and `example/docker-compose.yml` to your project’s root. Then, from the root of your project:
 
 ```bash
 docker-compose up
