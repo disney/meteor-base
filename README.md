@@ -32,7 +32,15 @@ docker run --rm geoffreybooth/meteor-base:$(cat ./.meteor/release | cut -c8-99) 
 
 Also copy in `example/.dockerignore`
 
-### Step #4 - Use Docker Compose to ease your workflow
+### Step #4 - Build & Profit 🎉
+
+Congratulations, you can know build the Docker image for your Meteor app in an easy and efficient way 🙂
+
+```bash
+docker build -t you-awesome-name/your-meteor-app-name .
+```
+
+### Step #5 (Optional) - Use Docker Compose to ease your workflow
 
 and `example/docker-compose.yml` to your project’s root. Then, from the root of your project:
 
