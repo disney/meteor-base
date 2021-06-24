@@ -32,7 +32,7 @@ docker run --rm geoffreybooth/meteor-base:$(cat ./.meteor/release | cut -c8-99) 
 
 ### Step #3 - Setup your .dockerignore accordingly to speed up builds
 
-Also copy in `example/.dockerignore`
+Also copy the `example/.dockerignore` file to the root of your repository so that heavy non-needed files are not passed to the Docker context, so that your build is faster (for more, see the [`.dockerignore` documentation](https://docs.docker.com/engine/reference/builder/#dockerignore-file).
 
 ### Step #4 - Build & Profit 🎉
 
