@@ -44,7 +44,7 @@ docker build -t you-awesome-name/your-meteor-app-name .
 
 ### Step #5 (Optional) - Use Docker Compose to ease your workflow
 
-and `example/docker-compose.yml` to your project’s root. Then, from the root of your project:
+To make your workflow easier, you can also copy the `example/docker-compose.yml` file to your project’s root. Then, from the root of your project, run:
 
 ```bash
 docker-compose up
