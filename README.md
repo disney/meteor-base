@@ -52,6 +52,8 @@ docker-compose up
 
 This builds an image for your app and starts it, along with a linked container for MongoDB. Go to [http://localhost/](http://localhost/) to see your app running.
 
+### Going further
+
 Feel free to edit the `Dockerfile` you copied into your project, for example to add Linux dependencies. The beauty of the multistage build pattern is that this base image can stay lean, without needing `ONBUILD` triggers or configuration files for you to influence the image that gets built. You control the final image via your own `Dockerfile`, so you can do whatever you want.
 
 If you want any command run on startup before the Meteor app itself is run, have your Dockerfile save a file `startup.sh` into `$SCRIPTS_FOLDER`. It will be executed automatically by `entrypoint.sh`.
