@@ -8,15 +8,21 @@ This repo contains a base Docker image for use by [Meteor](https://www.meteor.co
 
 ## Quickstart
 
+### Step 1: Bootstrap `Dockerfile` from template
+
 Copy `example/default.dockerfile` (or `example/app-with-native-dependencies.dockerfile` if your app has native dependencies that require compilation such as `bcrypt`, or if your app is using a version of Meteor older than 1.8.1) into the root of your project and rename it `Dockerfile`. This file assumes that your Meteor app is one level down from the root in a folder named `app`; either move your app there, or edit `Dockerfile` to point to your desired path (or the root of your project). Leave `Dockerfile` at the root.
 
-Edit the `Dockerfile` you copied into your project, changing the first line so that the numbers at the end match the version of Meteor of your project. For example:
+### Step 2: Set the correct Meteor version in the `Dockerfile`
+
+Edit the `Dockerfile` you copied into your project, changing the first line so that the numbers at the end match the version of Meteor of your project. You can find your project’s Meteor version in your app’s `.meteor/release` file.
+
+For example, if your project is running under Meteor 2.2:
 
 ```Dockerfile
 FROM geoffreybooth/meteor-base:2.2
 ```
 
-if your project is running under Meteor 2.2. See your app’s `.meteor/release` file to get its Meteor release version. This version must match an available tag from [disney/meteor-base](https://cloud.docker.com/repository/docker/geoffreybooth/meteor-base/tags).
+This version must match an available tag from [geoffreybooth/meteor-base](https://hub.docker.com/r/geoffreybooth/meteor-base/tags).
 
 If necessary, update version in the `FROM node` line to use the Node version appropriate for your release of Meteor. From your application folder, you can get this version via the following command:
 
@@ -24,13 +30,21 @@ If necessary, update version in the `FROM node` line to use the Node version app
 docker run --rm geoffreybooth/meteor-base:$(cat ./.meteor/release | cut -c8-99) meteor node --version | cut -c2-99 | grep -o "[0-9\.]*"
 ```
 
-Also copy in `example/.dockerignore` and `example/docker-compose.yml` to your project’s root. Then, from the root of your project:
+### Step 3: Configure `.dockerignore` to speed up builds
+
+Copy `example/.dockerignore` to your project’s root and edit it appropriately to avoid copying unnecessary files into the Docker context.
+
+### Step 4: Build and run
+
+Copy `example/docker-compose.yml` to your project’s root. Then, from the root of your project, run:
 
 ```bash
 docker-compose up
 ```
 
 This builds an image for your app and starts it, along with a linked container for MongoDB. Go to [http://localhost/](http://localhost/) to see your app running.
+
+### Going further
 
 Feel free to edit the `Dockerfile` you copied into your project, for example to add Linux dependencies. The beauty of the multistage build pattern is that this base image can stay lean, without needing `ONBUILD` triggers or configuration files for you to influence the image that gets built. You control the final image via your own `Dockerfile`, so you can do whatever you want.
 
