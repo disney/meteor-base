@@ -8,21 +8,21 @@ This repo contains a base Docker image for use by [Meteor](https://www.meteor.co
 
 ## Quickstart
 
-### Step #1 - Bootstrap Dockerfile from template
+### Step 1: Bootstrap `Dockerfile` from template
 
 Copy `example/default.dockerfile` (or `example/app-with-native-dependencies.dockerfile` if your app has native dependencies that require compilation such as `bcrypt`, or if your app is using a version of Meteor older than 1.8.1) into the root of your project and rename it `Dockerfile`. This file assumes that your Meteor app is one level down from the root in a folder named `app`; either move your app there, or edit `Dockerfile` to point to your desired path (or the root of your project). Leave `Dockerfile` at the root.
 
-### Step #2 - Ensure the Meteor version is the one you want
+### Step 2: Set the correct Meteor version in the `Dockerfile`
 
-Edit the `Dockerfile` you copied into your project, changing the first line so that the numbers at the end match the version of Meteor of your project.
+Edit the `Dockerfile` you copied into your project, changing the first line so that the numbers at the end match the version of Meteor of your project. You can find your project’s Meteor version in your app’s `.meteor/release` file.
 
-For example if you project is running under Meteor 2.2:
+For example, if your project is running under Meteor 2.2:
 
 ```Dockerfile
 FROM geoffreybooth/meteor-base:2.2
 ```
 
-See your app’s `.meteor/release` file to get its Meteor release version. This version must match an available tag from [geoffreybooth/meteor-base](https://hub.docker.com/r/geoffreybooth/meteor-base/tags).
+This version must match an available tag from [geoffreybooth/meteor-base](https://hub.docker.com/r/geoffreybooth/meteor-base/tags).
 
 If necessary, update version in the `FROM node` line to use the Node version appropriate for your release of Meteor. From your application folder, you can get this version via the following command:
 
@@ -30,21 +30,13 @@ If necessary, update version in the `FROM node` line to use the Node version app
 docker run --rm geoffreybooth/meteor-base:$(cat ./.meteor/release | cut -c8-99) meteor node --version | cut -c2-99 | grep -o "[0-9\.]*"
 ```
 
-### Step #3 - Setup your .dockerignore accordingly to speed up builds
+### Step 3: Configure `.dockerignore` to speed up builds
 
-Also copy the `example/.dockerignore` file to the root of your repository so that heavy non-needed files are not passed to the Docker context, so that your build is faster (for more, see the [`.dockerignore` documentation](https://docs.docker.com/engine/reference/builder/#dockerignore-file).
+Copy `example/.dockerignore` to your project’s root and edit it appropriately to avoid copying unnecessary files into the Docker context.
 
-### Step #4 - Build & Profit 🎉
+### Step 4: Build and run
 
-Congratulations, you can know build the Docker image for your Meteor app in an easy and efficient way 🙂
-
-```bash
-docker build -t you-awesome-name/your-meteor-app-name .
-```
-
-### Step #5 (Optional) - Use Docker Compose to ease your workflow
-
-To make your workflow easier, you can also copy the `example/docker-compose.yml` file to your project’s root. Then, from the root of your project, run:
+Copy `example/docker-compose.yml` to your project’s root. Then, from the root of your project, run:
 
 ```bash
 docker-compose up
