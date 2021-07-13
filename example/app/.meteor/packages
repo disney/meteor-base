@@ -21,3 +21,6 @@ shell-server@0.5.0            # Server-side component of the `meteor shell` comm
 
 autopublish@1.0.7             # Publish all data to the clients (for prototyping)
 insecure@1.0.7                # Allow all DB writes from clients (for prototyping)
+
+hot-module-replacement@0.2.0  # Update code in development without reloading the page
+blaze-hot               # Update files using Blaze's API with HMR
