@@ -61,7 +61,7 @@ for version in "${meteor_versions[@]}"; do
 		node_version='8.17.0'
 
 	# Versions 1.9 through 2.2.x need Node 12.22.1
-	elif [[ "${version}" == 1.9* ]] || [[ "${version}" == 2.0* ]] || [[ "${version}" == 2.1* ]] || [[ "${version}" == 2.2* ]]; then
+	elif [[ "${version}" == 1.9* ]] || [[ "${version}" == 1.10* ]] || [[ "${version}" == 1.11* ]] || [[ "${version}" == 1.12* ]] || [[ "${version}" == 2.0* ]] || [[ "${version}" == 2.1* ]] || [[ "${version}" == 2.2* ]]; then
 		node_version='12.22.1'
 
 	# Versions >= 2.3 need Node 14.17.1
