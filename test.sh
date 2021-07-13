@@ -56,14 +56,16 @@ for version in "${meteor_versions[@]}"; do
 		dockerfile='app-with-native-dependencies.dockerfile'
 	fi
 
-	node_version='12.22.1'
-	# Versions < 1.9 need Node 8.17.0
+	# Versions 1.8.x and below need Node 8.17.0
 	if [[ "${version}" == 1.6* ]] || [[ "${version}" == 1.7* ]] || [[ "${version}" == 1.8* ]]; then
 		node_version='8.17.0'
-	fi
 
-	# Versions 2.3 need Node 14.17.1
-	if [[ "${version}" == 2.3* ]]; then
+	# Versions 1.9 through 2.2.x need Node 12.22.1
+	elif [[ "${version}" == 1.9* ]] || [[ "${version}" == 2.0* ]] || [[ "${version}" == 2.1* ]] || [[ "${version}" == 2.2* ]]; then
+		node_version='12.22.1'
+
+	# Versions >= 2.3 need Node 14.17.1
+	else
 		node_version='14.17.1'
 	fi
 
