@@ -128,10 +128,10 @@ for version in "${meteor_versions[@]}"; do
 	run_with_suppressed_output 'node ../test/test.js' || true # Don’t exit if tests fail
 	elapsed="$((($SECONDS / 60) % 60)) min $(($SECONDS % 60)) sec"
 	if [ $exit_code -ne 0 ]; then
-		printf "${RED}FAIL for geoffreybooth/meteor-base:${version}${NC} after ${elapsed}\n"
+		printf "${RED}FAIL for geoffreybooth/meteor-base:${version} with node:${node_version}-alpine${NC} after ${elapsed}\n"
 		at_least_one_failure=true
 	else
-		printf "${GREEN}PASS for geoffreybooth/meteor-base:${version}${NC} after ${elapsed}\n"
+		printf "${GREEN}PASS for geoffreybooth/meteor-base:${version} with node:${node_version}-alpine${NC} after ${elapsed}\n"
 	fi
 
 	if [ "${SKIP_CLEANUP:-}" != 1 ]; then
