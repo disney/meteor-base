@@ -60,13 +60,21 @@ for version in "${meteor_versions[@]}"; do
 	if [[ "${version}" == 1.6* ]] || [[ "${version}" == 1.7* ]] || [[ "${version}" == 1.8* ]]; then
 		node_version='8.17.0'
 
-	# Versions 1.9 through 2.2.x need Node 12.22.1
-	elif [[ "${version}" == 1.9* ]] || [[ "${version}" == 1.10* ]] || [[ "${version}" == 1.11* ]] || [[ "${version}" == 1.12* ]] || [[ "${version}" == 2.0* ]] || [[ "${version}" == 2.1* ]] || [[ "${version}" == 2.2* ]]; then
+	# Versions 1.9 through 2.2 need Node 12.22.1
+	elif [[ "${version}" == 1.9* ]] || [[ "${version}" == 1.10* ]] || [[ "${version}" == 1.11* ]] || [[ "${version}" == 1.12* ]] || [[ "${version}" == 2.0* ]] || [[ "${version}" == 2.1* ]] || [[ "${version}" == 2.2 ]]; then
 		node_version='12.22.1'
-
-	# Versions >= 2.3 need Node 14.17.1
-	else
+		
+	# Versions 2.2.1 need Node 12.22.2
+	elif [[ "${version}" == 2.2.1 ]]; then
+		node_version='12.22.2'
+		
+	# Versions 2.3 need Node 14.17.1
+	elif [[ "${version}" == 2.3 ]]; then
 		node_version='14.17.1'
+
+	# Versions >= 2.3.1 need Node 14.17.3
+	else
+		node_version='14.17.3'
 	fi
 
 	echo 'Creating test app...'
@@ -120,10 +128,10 @@ for version in "${meteor_versions[@]}"; do
 	run_with_suppressed_output 'node ../test/test.js' || true # Don’t exit if tests fail
 	elapsed="$((($SECONDS / 60) % 60)) min $(($SECONDS % 60)) sec"
 	if [ $exit_code -ne 0 ]; then
-		printf "${RED}FAIL for geoffreybooth/meteor-base:${version}${NC} after ${elapsed}\n"
+		printf "${RED}FAIL for geoffreybooth/meteor-base:${version} with node:${node_version}-alpine${NC} after ${elapsed}\n"
 		at_least_one_failure=true
 	else
-		printf "${GREEN}PASS for geoffreybooth/meteor-base:${version}${NC} after ${elapsed}\n"
+		printf "${GREEN}PASS for geoffreybooth/meteor-base:${version} with node:${node_version}-alpine${NC} after ${elapsed}\n"
 	fi
 
 	if [ "${SKIP_CLEANUP:-}" != 1 ]; then
