@@ -72,7 +72,7 @@ for version in "${meteor_versions[@]}"; do
 	elif [[ "${version}" == 2.2.2 ]]; then
 		node_version='12.22.4'
 
-  # Versions 2.2.3 need Node 12.22.5
+	# Versions 2.2.3 need Node 12.22.5
 	elif [[ "${version}" == 2.2.3 ]]; then
 		node_version='12.22.5'
 
