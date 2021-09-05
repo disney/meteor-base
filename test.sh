@@ -64,19 +64,19 @@ for version in "${meteor_versions[@]}"; do
 	elif [[ "${version}" == 1.9* ]] || [[ "${version}" == 1.10* ]] || [[ "${version}" == 1.11* ]] || [[ "${version}" == 1.12* ]] || [[ "${version}" == 2.0* ]] || [[ "${version}" == 2.1* ]] || [[ "${version}" == 2.2 ]]; then
 		node_version='12.22.1'
 
-	# Versions 2.2.1 need Node 12.22.2
+	# Version 2.2.1 needs Node 12.22.2
 	elif [[ "${version}" == 2.2.1 ]]; then
 		node_version='12.22.2'
 
-	# Versions 2.2.2 need Node 12.22.4
+	# Version 2.2.2 needs Node 12.22.4
 	elif [[ "${version}" == 2.2.2 ]]; then
 		node_version='12.22.4'
 
-	# Versions 2.2.3 need Node 12.22.5
+	# Version 2.2.3 needs Node 12.22.5
 	elif [[ "${version}" == 2.2.3 ]]; then
 		node_version='12.22.5'
 
-	# Versions 2.3 need Node 14.17.1
+	# Version 2.3 needs Node 14.17.1
 	elif [[ "${version}" == 2.3 ]]; then
 		node_version='14.17.1'
 
@@ -88,7 +88,7 @@ for version in "${meteor_versions[@]}"; do
 	elif [[ "${version}" == 2.3.3 ]] || [[ "${version}" == 2.3.4 ]]; then
 		node_version='14.17.4'
 
-	# Versions 2.3.5 need Node 14.17.5
+	# Version 2.3.5 needs Node 14.17.5
 	elif [[ "${version}" == 2.3.5 ]]; then
 		node_version='14.17.5'
 
