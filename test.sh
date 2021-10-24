@@ -50,18 +50,9 @@ for version in "${meteor_versions[@]}"; do
 	rm -f test.docker-compose.yml
 	rm -rf test-app
 
-	# Versions < 1.8.1 need app-with-native-dependencies.dockerfile
-	dockerfile='default.dockerfile'
-	if [[ "${version}" == 1.6* ]] || [[ "${version}" == 1.7* ]] || [[ "${version}" == 1.8 ]] || [[ "${version}" == 1.8.0* ]]; then
-		dockerfile='app-with-native-dependencies.dockerfile'
-	fi
-
-	# Versions 1.8.x and below need Node 8.17.0
-	if [[ "${version}" == 1.6* ]] || [[ "${version}" == 1.7* ]] || [[ "${version}" == 1.8* ]]; then
-		node_version='8.17.0'
-
 	# Versions 1.9 through 2.2 need Node 12.22.1
-	elif [[ "${version}" == 1.9* ]] || [[ "${version}" == 1.10* ]] || [[ "${version}" == 1.11* ]] || [[ "${version}" == 1.12* ]] || [[ "${version}" == 2.0* ]] || [[ "${version}" == 2.1* ]] || [[ "${version}" == 2.2 ]]; then
+	dockerfile='default.dockerfile'
+	if [[ "${version}" == 1.9* ]] || [[ "${version}" == 1.10* ]] || [[ "${version}" == 1.11* ]] || [[ "${version}" == 1.12* ]] || [[ "${version}" == 2.0* ]] || [[ "${version}" == 2.1* ]] || [[ "${version}" == 2.2 ]]; then
 		node_version='12.22.1'
 
 	# Version 2.2.1 needs Node 12.22.2
@@ -99,20 +90,6 @@ for version in "${meteor_versions[@]}"; do
 
 	echo 'Creating test app...'
 	run_with_suppressed_output "docker run --rm --volume ${PWD}:/opt/tmp --workdir /opt/tmp geoffreybooth/meteor-base:${version} meteor create --release=${version} test-app"
-
-	if [[ "${version}" == 1.6.1* ]] || [[ "${version}" == 1.7 ]] || [[ "${version}" == 1.7.0* ]]; then
-		echo 'Fixing Babel dependency...'
-		cd ./test-app
-		run_with_suppressed_output "docker run --rm --volume ${PWD}:/opt/tmp --workdir /opt/tmp geoffreybooth/meteor-base:${version} meteor npm install --save-exact @babel/runtime@7.0.0-beta.55"
-		cd ..
-	fi
-
-	if [[ "${version}" == 1.8* ]]; then
-		echo 'Fixing jQuery dependency...'
-		cd ./test-app
-		run_with_suppressed_output "docker run --rm --volume ${PWD}:/opt/tmp --workdir /opt/tmp geoffreybooth/meteor-base:${version} meteor npm install jquery"
-		cd ..
-	fi
 
 	cp "${dockerfile}" test.dockerfile
 	do_sed "s|FROM geoffreybooth/meteor-base:.*|FROM geoffreybooth/meteor-base:${version}|" test.dockerfile
