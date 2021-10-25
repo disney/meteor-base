@@ -83,9 +83,13 @@ for version in "${meteor_versions[@]}"; do
 	elif [[ "${version}" == 2.3.5 ]]; then
 		node_version='14.17.5'
 
-	# Versions >= 2.3.6 need Node 14.17.6
-	else
+	# Version 2.3.6 and 2.4 need Node 14.17.6
+	elif [[ "${version}" == 2.3.6 ]] || [[ "${version}" == 2.4 ]]; then
 		node_version='14.17.6'
+
+	# Versions >= 2.5 need Node 14.18.1
+	else
+		node_version='14.18.1'
 	fi
 
 	echo 'Creating test app...'
