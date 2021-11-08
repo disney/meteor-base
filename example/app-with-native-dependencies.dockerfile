@@ -23,7 +23,7 @@ RUN apk --no-cache add \
 	bash \
 	g++ \
 	make \
-	python
+	python3
 
 # Copy in entrypoint
 COPY --from=0 $SCRIPTS_FOLDER $SCRIPTS_FOLDER/
