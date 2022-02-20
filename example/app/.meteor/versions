@@ -1,7 +1,7 @@
 allow-deny@1.1.1
 autopublish@1.0.7
 autoupdate@1.8.0
-babel-compiler@7.8.0
+babel-compiler@7.8.1
 babel-runtime@1.5.0
 base64@1.0.12
 binary-heap@1.0.11
@@ -26,7 +26,7 @@ es5-shim@4.8.0
 fetch@0.1.1
 geojson-utils@1.0.10
 hot-code-push@1.0.4
-hot-module-replacement@0.5.0
+hot-module-replacement@0.5.1
 html-tools@1.1.2
 htmljs@1.1.1
 id-map@1.1.1
@@ -45,7 +45,7 @@ modern-browsers@0.1.7
 modules@0.18.0
 modules-runtime@0.12.0
 modules-runtime-hot@0.14.0
-mongo@1.14.0
+mongo@1.14.6
 mongo-decimal@0.1.2
 mongo-dev-server@1.1.0
 mongo-id@1.0.8
@@ -69,5 +69,5 @@ templating-tools@1.2.1
 tracker@1.2.0
 typescript@4.4.1
 underscore@1.0.10
-webapp@1.13.0
+webapp@1.13.1
 webapp-hashing@1.1.0
