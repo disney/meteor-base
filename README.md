@@ -44,6 +44,20 @@ docker-compose up
 
 This builds an image for your app and starts it, along with a linked container for MongoDB. Go to [http://localhost/](http://localhost/) to see your app running.
 
+### Troubleshooting
+
+When this repository is updated for new Meteor versions, all the images for versions >= 1.9 are rebuilt and republished.  So all existing images will get the latest ubuntu base image and other dependencies, so that you’re not using some years-old version of Ubuntu etc. with known security issues.
+Consequently if you have existing environments you may need to update your Ubuntu base image to ensure compatibility with this package.  To update your local docker:
+
+```bash
+docker pull ubuntu
+```
+If you are running in a cloud environment such as ec2 or ECS on AWS, you may need to update your CodeBuild base image settings.
+In the AWS console you'll find this under
+```bash
+Devloper Tools->CodeBuild->Build Projects->Environment->Current environment image
+```
+
 ### Going further
 
 Feel free to edit the `Dockerfile` you copied into your project, for example to add Linux dependencies. The beauty of the multistage build pattern is that this base image can stay lean, without needing `ONBUILD` triggers or configuration files for you to influence the image that gets built. You control the final image via your own `Dockerfile`, so you can do whatever you want.
