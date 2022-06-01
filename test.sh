@@ -91,11 +91,15 @@ for version in "${meteor_versions[@]}"; do
 	elif [[ "${version}" == 2.5 ]]; then
 		node_version='14.18.1'
 
-	# Versions from 2.5.1 to 2.5.5 are not compatible because the Fibers version is missing binaries.
+	# Versions from 2.5.1 to 2.5.5 are unsupported because the Fibers version is missing binaries
 
-	# Versions >= 2.5.6 need Node 14.18.3
-	else
+	# Versions 2.5.6, 2.6 and 2.6.1 need Node 14.18.3
+	elif [[ "${version}" == 2.5.6 ]] || [[ "${version}" == 2.6 ]] || [[ "${version}" == 2.6.1 ]]; then
 		node_version='14.18.3'
+
+	# Versions >= 2.7 need Node 14.19.1
+	else
+		node_version='14.19.1'
 	fi
 
 	echo 'Creating test app...'
