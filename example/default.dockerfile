@@ -1,5 +1,5 @@
 # The tag here should match the Meteor version of your app, per .meteor/release
-FROM geoffreybooth/meteor-base:2.7.2
+FROM geoffreybooth/meteor-base:2.7.3
 
 # Copy app package.json and package-lock.json into container
 COPY ./app/package*.json $APP_SOURCE_FOLDER/
@@ -13,7 +13,7 @@ RUN bash $SCRIPTS_FOLDER/build-meteor-bundle.sh
 
 
 # Use the specific version of Node expected by your Meteor release, per https://docs.meteor.com/changelog.html; this is expected for Meteor 2.7.2
-FROM node:14.19.1-alpine
+FROM node:14.19.3-alpine
 
 ENV APP_BUNDLE_FOLDER /opt/bundle
 ENV SCRIPTS_FOLDER /docker
