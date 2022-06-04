@@ -100,7 +100,6 @@ for version in "${meteor_versions[@]}"; do
 	# Versions 2.7.0, 2.7.1, 2.7.2 need Node 14.19.1
 	elif [[ "${version}" == 2.7.0 ]] || [[ "${version}" == 2.7.1 ]] || [[ "${version}" == 2.7.2 ]]; then
 		node_version='14.19.1'
-	fi
 
 	# Versions >= 2.7.3 need Node 14.19.3
 	else
