@@ -50,61 +50,8 @@ for version in "${meteor_versions[@]}"; do
 	rm -f test.docker-compose.yml
 	rm -rf test-app
 
-	# Versions 1.9 through 2.2 need Node 12.22.1
 	dockerfile='default.dockerfile'
-	if [[ "${version}" == 1.9* ]] || [[ "${version}" == 1.10* ]] || [[ "${version}" == 1.11* ]] || [[ "${version}" == 1.12* ]] || [[ "${version}" == 2.0* ]] || [[ "${version}" == 2.1* ]] || [[ "${version}" == 2.2 ]]; then
-		node_version='12.22.1'
-
-	# Version 2.2.1 needs Node 12.22.2
-	elif [[ "${version}" == 2.2.1 ]]; then
-		node_version='12.22.2'
-
-	# Version 2.2.2 needs Node 12.22.4
-	elif [[ "${version}" == 2.2.2 ]]; then
-		node_version='12.22.4'
-
-	# Version 2.2.3 needs Node 12.22.5
-	elif [[ "${version}" == 2.2.3 ]]; then
-		node_version='12.22.5'
-
-	# Version 2.3 needs Node 14.17.1
-	elif [[ "${version}" == 2.3 ]]; then
-		node_version='14.17.1'
-
-	# Versions 2.3.1 and 2.3.2 need Node 14.17.3
-	elif [[ "${version}" == 2.3.1 ]] || [[ "${version}" == 2.3.2 ]]; then
-		node_version='14.17.3'
-
-	# Versions 2.3.3 and 2.3.4 need Node 14.17.4
-	elif [[ "${version}" == 2.3.3 ]] || [[ "${version}" == 2.3.4 ]]; then
-		node_version='14.17.4'
-
-	# Version 2.3.5 needs Node 14.17.5
-	elif [[ "${version}" == 2.3.5 ]]; then
-		node_version='14.17.5'
-
-	# Version 2.3.6 and 2.4 need Node 14.17.6
-	elif [[ "${version}" == 2.3.6 ]] || [[ "${version}" == 2.4 ]]; then
-		node_version='14.17.6'
-
-	# Version 2.5 needs Node 14.18.1
-	elif [[ "${version}" == 2.5 ]]; then
-		node_version='14.18.1'
-
-	# Versions from 2.5.1 to 2.5.5 are unsupported because the Fibers version is missing binaries
-
-	# Versions 2.5.6, 2.6 and 2.6.1 need Node 14.18.3
-	elif [[ "${version}" == 2.5.6 ]] || [[ "${version}" == 2.6 ]] || [[ "${version}" == 2.6.1 ]]; then
-		node_version='14.18.3'
-
-	# Versions 2.7.0, 2.7.1, 2.7.2 need Node 14.19.1
-	elif [[ "${version}" == 2.7.0 ]] || [[ "${version}" == 2.7.1 ]] || [[ "${version}" == 2.7.2 ]]; then
-		node_version='14.19.1'
-
-	# Versions >= 2.7.3 need Node 14.19.3
-	else
-		node_version='14.19.3'
-	fi
+	set_node_version "${version}"
 
 	echo 'Creating test app...'
 	run_with_suppressed_output "docker run --rm --volume ${PWD}:/opt/tmp --workdir /opt/tmp geoffreybooth/meteor-base:${version} meteor create --release=${version} test-app"
