@@ -1,14 +1,5 @@
 #!/usr/bin/env bash
-set -o errexit
-set -o pipefail
-set -o nounset
-set -o allexport
-
-
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-RED='\033[0;31m'
-NC='\033[0m'
+source ./support.sh
 
 
 exit_code=0 # Keep global, so that code below can get return value of this function
@@ -18,15 +9,6 @@ run_with_suppressed_output () {
 	if [ $exit_code -ne 0 ]; then
 		echo "$logs"
 		exit $exit_code
-	fi
-}
-
-
-do_sed () {
-	if [ "$(uname)" == "Darwin" ]; then # Mac
-		sed -i '' -e "$1" "$2"
-	else # Linux
-		sed --in-place "$1" "$2"
 	fi
 }
 
