@@ -44,7 +44,7 @@ set_node_version() {
 	elif [[ "$1" == 2.5.6 ]]; then node_version='14.18.3'
 	elif [[ "$1" == 2.6 ]]; then node_version='14.18.3'
 	elif [[ "$1" == 2.6.1 ]]; then node_version='14.18.3'
-	elif [[ "$1" == 2.7.0 ]]; then node_version='14.19.1'
+	elif [[ "$1" == 2.7 ]]; then node_version='14.19.1'
 	elif [[ "$1" == 2.7.1 ]]; then node_version='14.19.1'
 	elif [[ "$1" == 2.7.2 ]]; then node_version='14.19.1'
 	elif [[ "$1" == 2.7.3 ]]; then node_version='14.19.3'
