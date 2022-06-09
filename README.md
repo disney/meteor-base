@@ -67,6 +67,11 @@ Other projects I looked at generally had one or more of the disadvantages cited 
 Each new Meteor release requires new base images to be built and published. There’s a script in this repo to automate supporting a new Meteor version. For an example Meteor version 7.7.7 that requires Node 8.8.8, run:
 
 ```bash
+# Install Meteor if you haven’t already; see https://www.meteor.com/developers/install
+
+# Install npm-check-updates if you haven’t already
+npm install --global npm-check-updates
+
 ./update.sh --meteor-version 7.7.7 --node-version 8.8.8
 ```
 
