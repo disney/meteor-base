@@ -1,14 +1,5 @@
 #!/usr/bin/env bash
-set -o errexit
-set -o pipefail
-set -o nounset
-set -o allexport
-
-
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-RED='\033[0;31m'
-NC='\033[0m'
+source ./support.sh
 
 
 source ./versions.sh

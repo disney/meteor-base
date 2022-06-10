@@ -60,7 +60,24 @@ There are several great Meteor Docker images out there. We built this one becaus
 
 Other projects I looked at generally had one or more of the disadvantages cited above. Multistage Docker builds have only been possible since Docker 17.05, which came out in May 2017, and most projects on the Web were designed before then and therefore don’t take advantage of the possibilities offered by a multistage architecture.
 
-## Test
+## Contributing
+
+### Adding a new Meteor version
+
+Each new Meteor release requires new base images to be built and published. There’s a script in this repo to automate supporting a new Meteor version. For an example Meteor version 7.7.7 that requires Node 8.8.8, run:
+
+```bash
+# Install Meteor if you haven’t already; see https://www.meteor.com/developers/install
+
+# Install npm-check-updates if you haven’t already
+npm install --global npm-check-updates
+
+./update.sh --meteor-version 7.7.7 --node-version 8.8.8
+```
+
+This will update the various files in this repo that need changing for each new Meteor release. Commit this change on a new branch and open a pull request to this repo to get the new version added. Once the PR is merged, `./build.sh && ./test.sh && ./push.sh` will be run to rebuild, test and publish all images for all versions of Meteor ≥ 1.9. This will also update the version of Ubuntu in the base images to the latest Ubuntu version.
+
+### Test
 
 ```bash
 # Build all images
