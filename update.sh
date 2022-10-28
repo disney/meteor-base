@@ -83,6 +83,8 @@ do_sed "s|${node_version}|${new_node_version}|g" ./example/app-with-native-depen
 
 do_sed "s|${node_version}|${new_node_version}|g" ./example/default.dockerfile
 
+do_sed $"s|'${node_version}'|'${node_version}'\\n	elif [[ \"\$1\" == ${new_meteor_version} ]]; then node_version='${new_node_version}'|" ./support.sh
+
 
 # Update example app dependencies
 
