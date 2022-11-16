@@ -51,5 +51,6 @@ set_node_version() {
 	elif [[ "$1" == 2.7.1 ]]; then node_version='14.19.1'
 	elif [[ "$1" == 2.7.2 ]]; then node_version='14.19.1'
 	elif [[ "$1" == 2.7.3 ]]; then node_version='14.19.3'
+	elif [[ "$1" == 2.8.0 ]]; then node_version='14.20.1'
 	fi # End of versions
 }
