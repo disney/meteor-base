@@ -26,6 +26,7 @@ meteor_versions=( \
 	'2.3.4' \
 	'2.3.5' \
 	'2.3.6' \
+	'2.3.7' \
 	'2.4' \
 	'2.5' \
 	# '2.5.1' \ # Fibers is missing binaries
