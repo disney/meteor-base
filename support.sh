@@ -39,6 +39,7 @@ set_node_version() {
 	elif [[ "$1" == 2.3.4 ]]; then node_version='14.17.4'
 	elif [[ "$1" == 2.3.5 ]]; then node_version='14.17.5'
 	elif [[ "$1" == 2.3.6 ]]; then node_version='14.17.6'
+	elif [[ "$1" == 2.3.7 ]]; then node_version='14.17.6'
 	elif [[ "$1" == 2.4 ]]; then node_version='14.17.6'
 	elif [[ "$1" == 2.5 ]]; then node_version='14.18.1'
 	# Versions from 2.5.1 to 2.5.5 are unsupported because the Fibers version is missing binaries
