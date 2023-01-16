@@ -80,7 +80,7 @@ for version in "${meteor_versions[@]}"; do
 
 	if [ "${SKIP_CLEANUP:-}" != 1 ]; then
 		run_with_suppressed_output 'docker compose --file test.docker-compose.yml down'
-		run_with_suppressed_output 'docker rmi example_app:latest'
+		run_with_suppressed_output 'docker rmi example-app:latest'
 
 		rm -f test.dockerfile
 		rm -f test.docker-compose.yml
