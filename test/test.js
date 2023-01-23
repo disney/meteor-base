@@ -14,8 +14,6 @@ import puppeteer from 'puppeteer';
 
 		const element = await page.$('p');
 		message = await page.evaluate(element => element.textContent, element);
-	}catch(exception){
-		console.error('[test.js]: ', exception);
 	} finally {
 		const testPassed = message === 'You\'ve pressed the button 3 times.';
 		console.log((testPassed) ? `PASS: ${message}` : `FAIL: ${(message) ? message : '(no message displayed)'}`);
