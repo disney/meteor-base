@@ -1,22 +1,25 @@
 # The tag here should match the Meteor version of your app, per .meteor/release
-FROM geoffreybooth/meteor-base:2.11.0
+FROM geoffreybooth/meteor-base:2.11.0 AS bundler
+
+USER node:node
 
 # Copy app package.json and package-lock.json into container
-COPY ./app/package*.json $APP_SOURCE_FOLDER/
+COPY --chown=node:node ./app/package*.json $APP_SOURCE_FOLDER/
 
 RUN bash $SCRIPTS_FOLDER/build-app-npm-dependencies.sh
 
 # Copy app source into container
-COPY ./app $APP_SOURCE_FOLDER/
+COPY --chown=node:node ./app $APP_SOURCE_FOLDER/
 
 RUN bash $SCRIPTS_FOLDER/build-meteor-bundle.sh
 
 
 # Use the specific version of Node expected by your Meteor release, per https://docs.meteor.com/changelog.html; this is expected for Meteor 2.11.0
-FROM node:14.21.3-alpine
+FROM node:14.21.3-alpine AS builder
 
-ENV APP_BUNDLE_FOLDER /opt/bundle
-ENV SCRIPTS_FOLDER /docker
+ENV NODE_HOME /home/node
+ENV APP_BUNDLE_FOLDER $NODE_HOME/bundle
+ENV SCRIPTS_FOLDER $NODE_HOME/docker
 
 # Install OS build dependencies, which stay with this intermediate image but don’t become part of the final published image
 RUN apk --no-cache add \
@@ -25,11 +28,14 @@ RUN apk --no-cache add \
 	make \
 	python3
 
+# Principal of Least Privilege, should not run as root
+USER node:node
+
 # Copy in entrypoint
-COPY --from=0 $SCRIPTS_FOLDER $SCRIPTS_FOLDER/
+COPY --from=bundler $SCRIPTS_FOLDER $SCRIPTS_FOLDER/
 
 # Copy in app bundle
-COPY --from=0 $APP_BUNDLE_FOLDER/bundle $APP_BUNDLE_FOLDER/bundle/
+COPY --from=bundler $APP_BUNDLE_FOLDER/bundle $APP_BUNDLE_FOLDER/bundle/
 
 RUN bash $SCRIPTS_FOLDER/build-meteor-npm-dependencies.sh --build-from-source
 
@@ -38,8 +44,9 @@ RUN bash $SCRIPTS_FOLDER/build-meteor-npm-dependencies.sh --build-from-source
 # See previous FROM line; this must match
 FROM node:14.21.3-alpine
 
-ENV APP_BUNDLE_FOLDER /opt/bundle
-ENV SCRIPTS_FOLDER /docker
+ENV NODE_HOME /home/node
+ENV APP_BUNDLE_FOLDER $NODE_HOME/bundle
+ENV SCRIPTS_FOLDER $NODE_HOME/docker
 
 # Install OS runtime dependencies
 RUN apk --no-cache add \
@@ -47,12 +54,12 @@ RUN apk --no-cache add \
 	ca-certificates
 
 # Copy in entrypoint with the built and installed dependencies from the previous image
-COPY --from=1 $SCRIPTS_FOLDER $SCRIPTS_FOLDER/
+COPY --from=builder $SCRIPTS_FOLDER $SCRIPTS_FOLDER/
 
 # Copy in app bundle with the built and installed dependencies from the previous image
-COPY --from=1 $APP_BUNDLE_FOLDER/bundle $APP_BUNDLE_FOLDER/bundle/
+COPY --from=builder $APP_BUNDLE_FOLDER/bundle $APP_BUNDLE_FOLDER/bundle/
 
 # Start app
-ENTRYPOINT ["/docker/entrypoint.sh"]
+ENTRYPOINT ["/home/node/docker/entrypoint.sh"]
 
 CMD ["node", "main.js"]
