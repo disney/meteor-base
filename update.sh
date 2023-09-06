@@ -91,7 +91,7 @@ if [[ $(get_version_string "${new_node_version}") -ge $(get_version_string 14.21
 	meteor_node_image_keyword='meteor/node:'
 
 	node_alpine_keyword='alpine'
-	meteor_node_alpine_keyword='alpine-3.17'
+	meteor_node_alpine_keyword='alpine3.17'
 
 	do_sed "s|${node_image_keyword}|${meteor_node_image_keyword}|g" ./example/app-with-native-dependencies.dockerfile
 
