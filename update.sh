@@ -56,7 +56,6 @@ while test $# -gt 0; do
 	esac
 done
 
-
 # Update files for new Meteor version
 
 source ./versions.sh
@@ -79,9 +78,35 @@ do_sed $"s|'${newest_meteor_version}'|'${newest_meteor_version}' \\\\\n	'${new_m
 
 set_node_version $newest_meteor_version # $node_version is the version of the current newest Meteor version, not the one being added
 
-do_sed "s|${node_version}|${new_node_version}|g" ./example/app-with-native-dependencies.dockerfile
+# For 14.21.4 <= $new_node_version < 18.0.0, we need to use the Meteor fork of the Node Docker image; else, we use the regular official Node Docker image
 
-do_sed "s|${node_version}|${new_node_version}|g" ./example/default.dockerfile
+if [[ $(get_version_string "${new_node_version}") -ge $(get_version_string 14.21.4) && $(get_version_string "${new_node_version}") -lt $(get_version_string 18.0.0) ]]; then
+
+	node_image_keyword='node:'
+	meteor_node_image_keyword='meteor/node:'
+
+	node_alpine_keyword='alpine'
+	meteor_node_alpine_keyword='alpine3.17'
+
+	do_sed "s|${node_image_keyword}|${meteor_node_image_keyword}|g" ./example/app-with-native-dependencies.dockerfile
+
+	do_sed "s|${node_version}|${new_node_version}|g" ./example/app-with-native-dependencies.dockerfile
+
+	do_sed "s|${node_alpine_keyword}|${meteor_node_alpine_keyword}|g" ./example/app-with-native-dependencies.dockerfile
+
+	do_sed "s|${node_image_keyword}|${meteor_node_image_keyword}|g" ./example/default.dockerfile
+
+	do_sed "s|${node_version}|${new_node_version}|g" ./example/default.dockerfile
+
+	do_sed "s|${node_alpine_keyword}|${meteor_node_alpine_keyword}|g" ./example/default.dockerfile
+
+else
+
+	do_sed "s|${node_version}|${new_node_version}|g" ./example/app-with-native-dependencies.dockerfile
+
+	do_sed "s|${node_version}|${new_node_version}|g" ./example/default.dockerfile
+
+fi
 
 do_sed $"s|'${node_version}'|'${node_version}'\\n	elif [[ \"\$1\" == ${new_meteor_version} ]]; then node_version='${new_node_version}'|" ./support.sh
 
