@@ -67,5 +67,5 @@ set_node_version() {
 
 # Use printf to get appropriate version string for comparison
 get_version_string() {
-        printf "%02d%02d%02d" $(echo "$1" | tr '.' ' ');
+	printf "%02d%02d%02d" $(echo "$1" | tr '.' ' ');
 }
