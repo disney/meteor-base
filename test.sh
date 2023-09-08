@@ -12,6 +12,10 @@ run_with_suppressed_output () {
 	fi
 }
 
+# Use printf to get appropriate version string for comparison
+get_version_string() {
+        printf "%02d%02d%02d" $(echo "$1" | tr '.' ' ');
+}
 
 source ./versions.sh
 
@@ -72,10 +76,20 @@ for version in "${meteor_versions[@]}"; do
 	run_with_suppressed_output 'node ../test/test.js' || true # Don’t exit if tests fail
 	elapsed="$((($SECONDS / 60) % 60)) min $(($SECONDS % 60)) sec"
 	if [ $exit_code -ne 0 ]; then
-		printf "${RED}FAIL for geoffreybooth/meteor-base:${version} with node:${node_version}-alpine${NC} after ${elapsed}\n"
+		# For 14.21.4 <= $node_version < 18.0.0, we need to use the Meteor fork of the Node Docker image; else, we use the regular official Node Docker image
+		if [[ $(get_version_string "${node_version}") -ge $(get_version_string 14.21.4) && $(get_version_string "${node_version}") -lt $(get_version_string 18.0.0) ]]; then
+			printf "${RED}FAIL for geoffreybooth/meteor-base:${version} with meteor/node:${node_version}-alpine3.17${NC} after ${elapsed}\n"
+		else
+			printf "${RED}FAIL for geoffreybooth/meteor-base:${version} with node:${node_version}-alpine${NC} after ${elapsed}\n"
+		fi
 		at_least_one_failure=true
 	else
-		printf "${GREEN}PASS for geoffreybooth/meteor-base:${version} with node:${node_version}-alpine${NC} after ${elapsed}\n"
+		# For 14.21.4 <= $node_version < 18.0.0, we need to use the Meteor fork of the Node Docker image; else, we use the regular official Node Docker image
+		if [[ $(get_version_string "${node_version}") -ge $(get_version_string 14.21.4) && $(get_version_string "${node_version}") -lt $(get_version_string 18.0.0) ]]; then
+			printf "${GREEN}PASS for geoffreybooth/meteor-base:${version} with meteor/node:${node_version}-alpine3.17${NC} after ${elapsed}\n"
+		else
+			printf "${GREEN}PASS for geoffreybooth/meteor-base:${version} with node:${node_version}-alpine${NC} after ${elapsed}\n"
+		fi
 	fi
 
 	if [ "${SKIP_CLEANUP:-}" != 1 ]; then
