@@ -63,3 +63,9 @@ set_node_version() {
 	elif [[ "$1" == 2.13 ]]; then node_version='14.21.4'
 	fi # End of versions
 }
+
+
+# Use printf to get appropriate version string for comparison
+get_version_string() {
+        printf "%02d%02d%02d" $(echo "$1" | tr '.' ' ');
+}

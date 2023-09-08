@@ -12,11 +12,6 @@ run_with_suppressed_output () {
 	fi
 }
 
-# Use printf to get appropriate version string for comparison
-get_version_string() {
-        printf "%02d%02d%02d" $(echo "$1" | tr '.' ' ');
-}
-
 source ./versions.sh
 
 if [ -n "${CI_VERSION:-}" ]; then

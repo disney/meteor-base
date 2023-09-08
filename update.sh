@@ -56,11 +56,6 @@ while test $# -gt 0; do
 	esac
 done
 
-# Use printf to get appropriate version string for comparison
-get_version_string() {
-	printf "%02d%02d%02d" $(echo "$1" | tr '.' ' ');
-}
-
 # Update files for new Meteor version
 
 source ./versions.sh
