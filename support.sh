@@ -60,12 +60,11 @@ set_node_version() {
 	elif [[ "$1" == 2.10.0 ]]; then node_version='14.21.2'
 	elif [[ "$1" == 2.11.0 ]]; then node_version='14.21.3'
 	elif [[ "$1" == 2.12 ]]; then node_version='14.21.3'
-	elif [[ "$1" == 2.13 ]]; then node_version='14.21.4'
-	elif [[ "$1" == 2.14 ]]; then node_version='14.21.4'
-	elif [[ "$1" == 2.13.1 ]]; then node_version='14.21.4'
-	elif [[ "$1" == 2.14 ]]; then node_version='14.21.4'
-	elif [[ "$1" == 2.13.3 ]]; then node_version='14.21.4'
-	elif [[ "$1" == 2.14 ]]; then node_version='14.21.4'
+	elif [[ "$1" == 2.13 ]] || \
+		[[ "$1" == 2.13.1 ]] || \
+		[[ "$1" == 2.13.3 ]] || \
+		[[ "$1" == 2.14 ]] || \
+		[[ "$1" == 2.15 ]] ; then node_version='14.21.4'
 	fi # End of versions
 }
 
