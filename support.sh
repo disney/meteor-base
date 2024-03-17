@@ -18,6 +18,24 @@ do_sed () {
 	fi
 }
 
+# Reverse the file from filename or stdin
+do_tac () {
+	if [ "$(uname)" == "Darwin" ]; then # Mac
+		# macOS doesn't have tac, so we use tail -r
+		if (( $# == 0 )) ; then
+      tail -r < /dev/stdin
+    else
+			tail -r "$1"
+    fi
+	else # Linux
+		if (( $# == 0 )) ; then
+      tac < /dev/stdin
+    else
+			tac "$1"
+    fi
+	fi
+}
+
 
 set_node_version() {
 	# Versions 1.9 through 2.2 need Node 12.22.1
@@ -61,9 +79,7 @@ set_node_version() {
 	elif [[ "$1" == 2.11.0 ]]; then node_version='14.21.3'
 	elif [[ "$1" == 2.12 ]]; then node_version='14.21.3'
 	elif [[ "$1" == 2.13 ]]; then node_version='14.21.4'
-	elif [[ "$1" == 2.14 ]]; then node_version='14.21.4'
 	elif [[ "$1" == 2.13.1 ]]; then node_version='14.21.4'
-	elif [[ "$1" == 2.14 ]]; then node_version='14.21.4'
 	elif [[ "$1" == 2.13.3 ]]; then node_version='14.21.4'
 	elif [[ "$1" == 2.14 ]]; then node_version='14.21.4'
 	fi # End of versions
