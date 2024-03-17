@@ -28,6 +28,7 @@ do_tac () {
 			tail -r "$1"
     fi
 	else # Linux
+		# linux doesn't have -r option for tail
 		if (( $# == 0 )) ; then
       tac < /dev/stdin
     else
