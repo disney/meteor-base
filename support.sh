@@ -23,17 +23,17 @@ do_tac () {
 	if [ "$(uname)" == "Darwin" ]; then # Mac
 		# macOS doesn't have tac, so we use tail -r
 		if (( $# == 0 )) ; then
-      tail -r < /dev/stdin
-    else
+			tail -r < /dev/stdin
+		else
 			tail -r "$1"
-    fi
+		fi
 	else # Linux
 		# linux doesn't have -r option for tail
 		if (( $# == 0 )) ; then
-      tac < /dev/stdin
-    else
+			tac < /dev/stdin
+		else
 			tac "$1"
-    fi
+		fi
 	fi
 }
 
