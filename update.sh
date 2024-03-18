@@ -108,7 +108,16 @@ else
 
 fi
 
-do_sed $"s|'${node_version}'|'${node_version}'\\n	elif [[ \"\$1\" == ${new_meteor_version} ]]; then node_version='${new_node_version}'|" ./support.sh
+
+# Use cat here because the file is being written to in the same command
+# Reverse the file, replace the first occurrence of the current node version with __XXXXXX__ as placeholder,
+# reverse the file back, replace __XXXXXX__ back and add new line for the new Meteor version, and write the file back
+cat ./support.sh \
+	| do_tac \
+	| sed "1,/'${node_version}'/s|'${node_version}'|'__XXXXXX__'|" \
+	| do_tac \
+	| sed "s|'__XXXXXX__'|'${node_version}'\\n	elif [[ \"\$1\" == ${new_meteor_version} ]]; then node_version='${new_node_version}'|" \
+	| tee -i ./support.sh > /dev/null
 
 
 # Update example app dependencies
