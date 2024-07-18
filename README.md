@@ -16,10 +16,10 @@ Copy `example/default.dockerfile` (or `example/app-with-native-dependencies.dock
 
 Edit the `Dockerfile` you copied into your project, changing the first line so that the numbers at the end match the version of Meteor of your project. You can find your project’s Meteor version in your app’s `.meteor/release` file.
 
-For example, if your project is running under Meteor 2.16:
+For example, if your project is running under Meteor 3.0.1:
 
 ```Dockerfile
-FROM geoffreybooth/meteor-base:2.16
+FROM geoffreybooth/meteor-base:3.0.1
 ```
 
 This version must match an available tag from [geoffreybooth/meteor-base](https://hub.docker.com/r/geoffreybooth/meteor-base/tags).
@@ -68,10 +68,6 @@ Each new Meteor release requires new base images to be built and published. Ther
 
 ```bash
 # Install Meteor if you haven’t already; see https://www.meteor.com/developers/install
-
-# Install npm-check-updates if you haven’t already
-npm install --global npm-check-updates
-
 ./update.sh --meteor-version 7.7.7 --node-version 8.8.8
 ```
 

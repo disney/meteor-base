@@ -10,13 +10,6 @@ if ! which meteor > /dev/null ; then
 	exit 1
 fi
 
-if ! which npm-check-updates > /dev/null ; then
-	echo 'Error: npm-check-updates must be installed:'
-	echo 'npm install --global npm-check-updates'
-	exit 1
-fi
-
-
 # Parse arguments
 
 help() {
@@ -126,7 +119,7 @@ cd example/app
 
 meteor update --release "${new_meteor_version}"
 
-npm-check-updates --configFilePath /dev/null --upgrade
+npx npm-check-updates --configFilePath /dev/null --upgrade
 npm install
 
 cd ../..
