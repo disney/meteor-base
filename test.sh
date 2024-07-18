@@ -44,7 +44,7 @@ for version in "${meteor_versions[@]}"; do
 	# we need to get the meteor/node image
 	# else we use the official node image
 	if [[ $(get_version_string "${node_version}") -ge $(get_version_string 14.21.4) && $(get_version_string "${node_version}") -lt $(get_version_string 18.0.0) ]]; then
-		do_sed "s|FROM node:.*|FROM meteor/node:${node_version}-alpine|" test.dockerfile
+		do_sed "s|FROM node:.*|FROM meteor/node:${node_version}-alpine3.17|" test.dockerfile
 	else
 		do_sed "s|FROM node:.*|FROM node:${node_version}-alpine|" test.dockerfile
 	fi
