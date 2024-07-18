@@ -39,7 +39,16 @@ for version in "${meteor_versions[@]}"; do
 
 	cp "${dockerfile}" test.dockerfile
 	do_sed "s|FROM geoffreybooth/meteor-base:.*|FROM geoffreybooth/meteor-base:${version}|" test.dockerfile
-	do_sed "s|FROM node:.*|FROM node:${node_version}-alpine|" test.dockerfile
+
+	# if we're using node version 14.21.4
+	# we need to get the meteor/node image
+	# else we use the official node image
+	if [[ $(get_version_string "${node_version}") -ge $(get_version_string 14.21.4) && $(get_version_string "${node_version}") -lt $(get_version_string 18.0.0) ]]; then
+		do_sed "s|FROM node:.*|FROM meteor/node:${node_version}|" test.dockerfile
+	else
+		do_sed "s|FROM node:.*|FROM node:${node_version}-alpine|" test.dockerfile
+	fi
+
 	do_sed "s|/app|/test-app|g" test.dockerfile
 
 	cp docker-compose.yml test.docker-compose.yml
