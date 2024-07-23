@@ -68,6 +68,10 @@ Each new Meteor release requires new base images to be built and published. Ther
 
 ```bash
 # Install Meteor if you haven’t already; see https://www.meteor.com/developers/install
+
+# Install npm-check-updates if you haven’t already
+npm install --global npm-check-updates
+
 ./update.sh --meteor-version 7.7.7 --node-version 8.8.8
 ```
 
