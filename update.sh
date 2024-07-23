@@ -126,7 +126,7 @@ cd example/app
 
 meteor update --release "${new_meteor_version}"
 
-npx npm-check-updates --configFilePath /dev/null --upgrade
+npm-check-updates --configFilePath /dev/null --upgrade
 npm install
 
 cd ../..
