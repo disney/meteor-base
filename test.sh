@@ -2,7 +2,7 @@
 source ./support.sh
 
 exit_code=0 # Keep global, so that code below can get return value of this function
-run_with_suppressed_output() {
+run_with_suppressed_output () {
 	exit_code=0
 	logs=$(eval "$1 2>&1") || exit_code=$?
 	if [ $exit_code -ne 0 ]; then
@@ -14,9 +14,9 @@ run_with_suppressed_output() {
 source ./versions.sh
 
 if [ -n "${CI_VERSION:-}" ]; then
-	meteor_versions=("$CI_VERSION")
+	meteor_versions=( "$CI_VERSION" )
 elif [[ "${1-x}" != x ]]; then
-	meteor_versions=("$1")
+	meteor_versions=( "$1" )
 fi
 
 cd example
@@ -60,7 +60,7 @@ for version in "${meteor_versions[@]}"; do
 
 	# Poll until docker-compose network ready, timing out after 20 seconds
 	for i in {1..20}; do
-		(curl --silent --fail http://localhost/ | grep __meteor_runtime_config__) >/dev/null 2>&1 && break || {
+		(curl --silent --fail http://localhost/ | grep __meteor_runtime_config__) > /dev/null 2>&1 && break || {
 			if [ "$i" -lt 21 ]; then
 				sleep 1
 			else
@@ -104,7 +104,7 @@ for version in "${meteor_versions[@]}"; do
 	fi
 done
 
-if $at_least_one_failure; then
+if $at_least_one_failure ; then
 	printf "${RED}FAIL! At least one image failed the test${NC}\n"
 	exit 1
 else
