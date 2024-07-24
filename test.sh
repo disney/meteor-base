@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 source ./support.sh
 
+
 exit_code=0 # Keep global, so that code below can get return value of this function
 run_with_suppressed_output () {
 	exit_code=0
