@@ -19,5 +19,5 @@ hot-module-replacement@0.5.4  # Update client in development without reloading t
 
 autopublish@1.0.8             # Publish all data to the clients (for prototyping)
 insecure@1.0.8                # Allow all DB writes from clients (for prototyping)
-static-html@1.3.3             # Define static page content in .html files
+static-html@1.4.0             # Define static page content in .html files
 react-meteor-data       # React higher-order component for reactively tracking Meteor data
