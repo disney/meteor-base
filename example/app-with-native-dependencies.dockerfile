@@ -15,8 +15,8 @@ RUN bash $SCRIPTS_FOLDER/build-meteor-bundle.sh
 # Use the specific version of Node expected by your Meteor release, per https://docs.meteor.com/changelog.html; this is expected for Meteor 3.0.4
 FROM node:20.18.0-alpine
 
-ENV APP_BUNDLE_FOLDER /opt/bundle
-ENV SCRIPTS_FOLDER /docker
+ENV APP_BUNDLE_FOLDER=/opt/bundle
+ENV SCRIPTS_FOLDER=/docker
 
 # Install OS build dependencies, which stay with this intermediate image but don’t become part of the final published image
 RUN apk --no-cache add \
@@ -38,8 +38,8 @@ RUN bash $SCRIPTS_FOLDER/build-meteor-npm-dependencies.sh --build-from-source
 # See previous FROM line; this must match
 FROM node:20.18.0-alpine
 
-ENV APP_BUNDLE_FOLDER /opt/bundle
-ENV SCRIPTS_FOLDER /docker
+ENV APP_BUNDLE_FOLDER=/opt/bundle
+ENV SCRIPTS_FOLDER=/docker
 
 # Install OS runtime dependencies
 RUN apk --no-cache add \

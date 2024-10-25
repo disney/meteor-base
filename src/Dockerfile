@@ -6,9 +6,9 @@ FROM ubuntu
 # Meteor version to build for; see ../build.sh
 ARG METEOR_VERSION
 
-ENV SCRIPTS_FOLDER /docker
-ENV APP_SOURCE_FOLDER /opt/src
-ENV APP_BUNDLE_FOLDER /opt/bundle
+ENV SCRIPTS_FOLDER=/docker
+ENV APP_SOURCE_FOLDER=/opt/src
+ENV APP_BUNDLE_FOLDER=/opt/bundle
 
 # Install dependencies, based on https://github.com/jshimko/meteor-launchpad/blob/master/scripts/install-deps.sh (only the parts we plan to use)
 ENV DEBIAN_FRONTEND=noninteractive
@@ -25,7 +25,7 @@ RUN curl https://install.meteor.com/?release=$METEOR_VERSION --output /tmp/insta
 	sh /tmp/install-meteor.sh
 
 # Fix permissions warning; https://github.com/meteor/meteor/issues/7959
-ENV METEOR_ALLOW_SUPERUSER true
+ENV METEOR_ALLOW_SUPERUSER=true
 
 
 # Copy entrypoint and dependencies
