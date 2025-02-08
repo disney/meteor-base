@@ -62,7 +62,8 @@ meteor_versions=( \
 	'3.0.2' \
 	'3.0.3' \
 	'3.0.4' \
-	'3.1'
+	'3.1' \
+	'3.1.1'
 )
 
 latest_version="${meteor_versions[*]: -1}"
