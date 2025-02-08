@@ -36,10 +36,10 @@ Copy `example/.dockerignore` to your project’s root and edit it appropriately 
 
 ### Step 4: Build and run
 
-Copy `example/docker-compose.yml` to your project’s root. Then, from the root of your project, run:
+Copy `example/compose.yml` to your project’s root. Then, from the root of your project, run:
 
 ```bash
-docker-compose up
+docker compose up
 ```
 
 This builds an image for your app and starts it, along with a linked container for MongoDB. Go to [http://localhost/](http://localhost/) to see your app running.

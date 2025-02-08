@@ -28,7 +28,7 @@ for version in "${meteor_versions[@]}"; do
 	SECONDS=0
 
 	rm -f test.dockerfile
-	rm -f test.docker-compose.yml
+	rm -f test.compose.yml
 	rm -rf test-app
 
 	dockerfile='default.dockerfile'
@@ -50,16 +50,16 @@ for version in "${meteor_versions[@]}"; do
 
 	do_sed "s|/app|/test-app|g" test.dockerfile
 
-	cp docker-compose.yml test.docker-compose.yml
-	do_sed 's|dockerfile: Dockerfile|dockerfile: test.dockerfile|' test.docker-compose.yml
+	cp compose.yml test.compose.yml
+	do_sed 's|dockerfile: Dockerfile|dockerfile: test.dockerfile|' test.compose.yml
 
 	echo 'Building test app Docker image...'
-	run_with_suppressed_output 'docker compose --file test.docker-compose.yml build'
+	run_with_suppressed_output 'docker compose --file test.compose.yml build'
 
 	echo 'Launching test app...'
-	run_with_suppressed_output 'docker compose --file test.docker-compose.yml up --detach'
+	run_with_suppressed_output 'docker compose --file test.compose.yml up --detach'
 
-	# Poll until docker-compose network ready, timing out after 20 seconds
+	# Poll until docker compose network ready, timing out after 20 seconds
 	for i in {1..20}; do
 		(curl --silent --fail http://localhost/ | grep __meteor_runtime_config__) > /dev/null 2>&1 && break || {
 			if [ "$i" -lt 21 ]; then
@@ -96,11 +96,11 @@ for version in "${meteor_versions[@]}"; do
 	fi
 
 	if [ "${SKIP_CLEANUP:-}" != 1 ]; then
-		run_with_suppressed_output 'docker compose --file test.docker-compose.yml down'
+		run_with_suppressed_output 'docker compose --file test.compose.yml down'
 		run_with_suppressed_output 'docker rmi example-app:latest'
 
 		rm -f test.dockerfile
-		rm -f test.docker-compose.yml
+		rm -f test.compose.yml
 		rm -rf test-app
 	fi
 done
