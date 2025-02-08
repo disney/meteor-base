@@ -1,7 +1,7 @@
-allow-deny@2.0.0
+allow-deny@2.1.0
 autopublish@1.0.8
 autoupdate@2.0.0
-babel-compiler@7.11.2
+babel-compiler@7.11.3
 babel-runtime@1.5.2
 base64@1.0.13
 binary-heap@1.0.12
@@ -11,9 +11,9 @@ callback-hook@1.6.0
 check@1.4.4
 core-runtime@1.0.0
 ddp@1.4.2
-ddp-client@3.0.3
+ddp-client@3.1.0
 ddp-common@1.4.4
-ddp-server@3.0.3
+ddp-server@3.1.0
 diff-sequence@1.1.3
 dynamic-import@0.7.4
 ecmascript@0.16.10
@@ -32,7 +32,7 @@ insecure@1.0.8
 inter-process-messaging@0.1.2
 launch-screen@2.0.1
 logging@1.3.5
-meteor@2.0.2
+meteor@2.1.0
 meteor-base@1.5.2
 minifier-css@2.0.0
 minifier-js@3.0.1
@@ -43,11 +43,11 @@ modern-browsers@0.1.11
 modules@0.20.3
 modules-runtime@0.13.2
 modules-runtime-hot@0.14.3
-mongo@2.0.3
+mongo@2.1.0
 mongo-decimal@0.2.0
 mongo-dev-server@1.1.1
 mongo-id@1.0.9
-npm-mongo@6.10.0
+npm-mongo@6.10.2
 ordered-dict@1.2.0
 promise@1.0.0
 random@1.2.2
@@ -58,7 +58,7 @@ reload@1.3.2
 retry@1.1.1
 routepolicy@1.1.2
 shell-server@0.6.1
-socket-stream-client@0.5.3
+socket-stream-client@0.6.0
 standard-minifier-css@1.9.3
 standard-minifier-js@3.0.0
 static-html@1.4.0
