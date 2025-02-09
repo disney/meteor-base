@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 source ./support.sh
+source ./versions.sh
 
 
 # Check for dependencies
@@ -58,25 +59,23 @@ done
 
 # Update files for new Meteor version
 
-source ./versions.sh
-newest_meteor_version="${meteor_versions[*]: -1}"
 
-do_sed $"s|          - '${newest_meteor_version}'|          - '${newest_meteor_version}'\\n          - '${new_meteor_version}'|" ./.github/workflows/continuous-integration-workflow.yml
+do_sed $"s|          - '${latest_version}'|          - '${latest_version}'\\n          - '${new_meteor_version}'|" ./.github/workflows/continuous-integration-workflow.yml
 
-do_sed "s|${newest_meteor_version}|${new_meteor_version}|g" ./README.md
+do_sed "s|${latest_version}|${new_meteor_version}|g" ./README.md
 
-do_sed "s|${newest_meteor_version}|${new_meteor_version}|g" ./example/app-with-native-dependencies.dockerfile
+do_sed "s|${latest_version}|${new_meteor_version}|g" ./example/app-with-native-dependencies.dockerfile
 
 # Skip ./example/app/.meteor/release because the Meteor update command below will change it
 
-do_sed "s|${newest_meteor_version}|${new_meteor_version}|g" ./example/default.dockerfile
+do_sed "s|${latest_version}|${new_meteor_version}|g" ./example/default.dockerfile
 
-do_sed $"s|'${newest_meteor_version}'|'${newest_meteor_version}' \\\\\n	'${new_meteor_version}'|" ./versions.sh
+do_sed $"s|'${latest_version}'|'${latest_version}' \\\\\n	'${new_meteor_version}'|" ./versions.sh
 
 
 # Update files for new Node version
 
-set_node_version $newest_meteor_version # $node_version is the version of the current newest Meteor version, not the one being added
+set_node_version $latest_version # $node_version is the version of the current newest Meteor version, not the one being added
 
 # For 14.21.4 <= $new_node_version < 18.0.0, we need to use the Meteor fork of the Node Docker image; else, we use the regular official Node Docker image
 
