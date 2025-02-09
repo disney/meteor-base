@@ -71,12 +71,11 @@ for version in "${meteor_versions[@]}"; do
 	done
 
 	echo 'Running test...'
+	cd ../test
 	if [ ! -d ../test/node_modules ]; then
-		cd ../test
 		run_with_suppressed_output 'npm ci'
-		cd ../example
 	fi
-	run_with_suppressed_output 'node ../test/test.js' || true # Don’t exit if tests fail
+	run_with_suppressed_output 'node --run test' || true # Don’t exit if tests fail
 	elapsed="$((($SECONDS / 60) % 60)) min $(($SECONDS % 60)) sec"
 	if [ $exit_code -ne 0 ]; then
 		# For 14.21.4 <= $node_version < 18.0.0, we need to use the Meteor fork of the Node Docker image; else, we use the regular official Node Docker image
@@ -96,6 +95,7 @@ for version in "${meteor_versions[@]}"; do
 	fi
 
 	if [ "${SKIP_CLEANUP:-}" != 1 ]; then
+		cd ../example
 		run_with_suppressed_output 'docker compose --file test.compose.yml down'
 		run_with_suppressed_output 'docker rmi example-app:latest'
 
