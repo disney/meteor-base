@@ -20,7 +20,11 @@ done
 
 
 if [[ "${#versions[@]}" -eq 1 ]]; then
-	printf "${GREEN}Success pushing Docker base image for Meteor ${versions}\n"
+	printf "${GREEN}Success pushing Docker base image for Meteor ${versions}"
+	if [[ "${versions[0]}" == $latest_version ]]; then
+		printf " (latest version)\n"
+	else
+		printf "\n"
 else
 	printf "${GREEN}Success pushing Docker base images for all supported Meteor versions\n"
 fi

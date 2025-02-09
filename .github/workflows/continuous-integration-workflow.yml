@@ -1,8 +1,5 @@
-name: Build and Test
-
-on:
-  [push, pull_request]
-
+name: CI
+on: push
 jobs:
   ci:
     runs-on: ubuntu-latest
@@ -91,3 +88,16 @@ jobs:
       env:
         CI_VERSION: ${{ matrix.version }}
         SKIP_CLEANUP: 1
+
+    - name: Login to Docker Hub
+      if: ${{ github.ref == 'refs/heads/main' }}
+      uses: docker/login-action@v3
+      with:
+        username: ${{ vars.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_PERSONAL_ACCESS_TOKEN }}
+
+    - name: Push Docker image
+      if: ${{ github.ref == 'refs/heads/main' }}
+      run: ./push.sh
+      env:
+        CI_VERSION: ${{ matrix.version }}

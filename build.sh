@@ -6,7 +6,10 @@ source ./versions.sh
 build_cmd() {
 	docker build --build-arg "METEOR_VERSION=$1" --tag geoffreybooth/meteor-base:"$1" ./src
 	if [[ $1 == $latest_version ]]; then
-		docker tag geoffreybooth/meteor-base:"$1" geoffreybooth/meteor-base:latest
+		if ! docker tag geoffreybooth/meteor-base:"$1" geoffreybooth/meteor-base:latest; then
+			printf "${RED}Error tagging Docker base image for Meteor (latest version)${NC}\n"
+			exit 1
+		fi
 	fi
 }
 
@@ -26,7 +29,12 @@ done
 
 
 if [[ "${#versions[@]}" -eq 1 ]]; then
-	printf "${GREEN}Success building Docker base image for Meteor ${versions}\n"
+	printf "${GREEN}Success building Docker base image for Meteor ${versions}"
+	if [[ "${versions[0]}" == $latest_version ]]; then
+		printf " (latest version)\n"
+	else
+		printf "\n"
+	fi
 else
 	printf "${GREEN}Success building Docker base images for all supported Meteor versions\n"
 fi
