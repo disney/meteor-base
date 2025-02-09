@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 source ./support.sh
+source ./versions.sh
 
 
 exit_code=0 # Keep global, so that code below can get return value of this function
@@ -12,18 +13,11 @@ run_with_suppressed_output () {
 	fi
 }
 
-source ./versions.sh
-
-if [ -n "${CI_VERSION:-}" ]; then
-	meteor_versions=( "$CI_VERSION" )
-elif [[ "${1-x}" != x ]]; then
-	meteor_versions=( "$1" )
-fi
 
 cd example
 
 at_least_one_failure=false
-for version in "${meteor_versions[@]}"; do
+for version in "${versions[@]}"; do
 	printf "${YELLOW}Testing Docker image geoffreybooth/meteor-base:${version}...${NC}\n"
 	SECONDS=0
 
