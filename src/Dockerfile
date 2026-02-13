@@ -39,4 +39,7 @@ RUN cd $SCRIPTS_FOLDER && \
 		meteor npm ci; \
 	fi
 
+RUN set -eu; \
+  NODE_BIN=$(find /root/.meteor -type f -path '*/dev_bundle/bin/node' -print -quit 2>/dev/null); \
+  ln -sf "$NODE_BIN" /usr/local/bin/node
 # No ONBUILD lines, because this is intended to be used by your app’s multistage Dockerfile and you might need control of the sequence of steps using files from this image
