@@ -96,6 +96,7 @@ set_node_version() {
 	elif [[ "$1" == 3.3 ]]; then node_version='22.16.0'
 	elif [[ "$1" == 3.3.1 ]]; then node_version='22.18.0'
 	elif [[ "$1" == 3.3.2 ]]; then node_version='22.19.0'
+	elif [[ "$1" == 3.4 ]]; then node_version='22.22.0'
 	fi # End of versions
 }
 
