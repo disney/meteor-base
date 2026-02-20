@@ -10,17 +10,15 @@ if [ -n "${MONGO_URL:-}" ]; then # Check for MongoDB connection if MONGO_URL is 
 	node <<- 'EOJS'
 	const mongoClient = require('mongodb').MongoClient;
 	setInterval(function() {
-		mongoClient.connect(process.env.MONGO_URL, function(err, client) {
-			if (client) {
-				console.log('Successfully connected to MongoDB');
-				client.close();
-			}
-			if (err) {
-				console.error(err);
-			} else {
-				process.exit(0);
-			}
-		});
+		let client;
+		try {
+			client = await MongoClient.connect(process.env.MONGO_URL);
+			console.log('Successfully connected to MongoDB');
+			await client.close();
+			process.exit(0);
+		} catch (err) {
+			console.error(err);
+		}
 	}, 1000);
 	EOJS
 fi
