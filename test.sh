@@ -9,7 +9,7 @@ run_with_suppressed_output () {
 	logs=$(eval "$1 2>&1") || exit_code=$?
 	if [ $exit_code -ne 0 ]; then
 		echo "$logs"
-		exit $exit_code
+		return $exit_code
 	fi
 }
 
