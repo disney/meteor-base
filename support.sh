@@ -18,6 +18,25 @@ do_sed () {
 	fi
 }
 
+# Reverse the file from filename or stdin
+do_tac () {
+	if [ "$(uname)" == "Darwin" ]; then # Mac
+		# macOS doesn't have tac, so we use tail -r
+		if (( $# == 0 )) ; then
+			tail -r < /dev/stdin
+		else
+			tail -r "$1"
+		fi
+	else # Linux
+		# linux doesn't have -r option for tail
+		if (( $# == 0 )) ; then
+			tac < /dev/stdin
+		else
+			tac "$1"
+		fi
+	fi
+}
+
 
 set_node_version() {
 	# Versions 1.9 through 2.2 need Node 12.22.1
@@ -25,8 +44,9 @@ set_node_version() {
 		[[ "$1" == 1.10* ]] || \
 		[[ "$1" == 1.11* ]] || \
 		[[ "$1" == 1.12* ]] || \
-		[[ "$1" == 2.0* ]] || \
-		[[ "$1" == 2.1* ]] || \
+		[[ "$1" == 2.0 ]] || \
+		[[ "$1" == 2.1 ]] || \
+		[[ "$1" == 2.1.1 ]] || \
 		[[ "$1" == 2.2 ]]; then node_version='12.22.1'
 	elif [[ "$1" == 2.2.1 ]]; then node_version='12.22.2'
 	elif [[ "$1" == 2.2.2 ]]; then node_version='12.22.4'
@@ -53,5 +73,39 @@ set_node_version() {
 	elif [[ "$1" == 2.7.2 ]]; then node_version='14.19.1'
 	elif [[ "$1" == 2.7.3 ]]; then node_version='14.19.3'
 	elif [[ "$1" == 2.8.0 ]]; then node_version='14.20.1'
+	elif [[ "$1" == 2.8.1 ]]; then node_version='14.21.1'
+	elif [[ "$1" == 2.9.0 ]]; then node_version='14.21.1'
+	elif [[ "$1" == 2.9.1 ]]; then node_version='14.21.2'
+	elif [[ "$1" == 2.10.0 ]]; then node_version='14.21.2'
+	elif [[ "$1" == 2.11.0 ]]; then node_version='14.21.3'
+	elif [[ "$1" == 2.12 ]]; then node_version='14.21.3'
+	elif [[ "$1" == 2.13 ]]; then node_version='14.21.4'
+	elif [[ "$1" == 2.13.1 ]]; then node_version='14.21.4'
+	elif [[ "$1" == 2.13.3 ]]; then node_version='14.21.4'
+	elif [[ "$1" == 2.14 ]]; then node_version='14.21.4'
+	elif [[ "$1" == 2.15 ]]; then node_version='14.21.4'
+	elif [[ "$1" == 2.16 ]]; then node_version='14.21.4'
+	elif [[ "$1" == 3.0.1 ]]; then node_version='20.15.1'
+	elif [[ "$1" == 3.0.2 ]]; then node_version='20.15.1'
+	elif [[ "$1" == 3.0.3 ]]; then node_version='20.17.0'
+	elif [[ "$1" == 3.0.4 ]]; then node_version='20.18.0'
+	elif [[ "$1" == 3.1 ]]; then node_version='22.11.0'
+	elif [[ "$1" == 3.1.1 ]]; then node_version='22.13.0'
+	elif [[ "$1" == 3.1.2 ]]; then node_version='22.13.1'
+	elif [[ "$1" == 3.2 ]]; then node_version='22.14.0'
+	elif [[ "$1" == 3.3 ]]; then node_version='22.16.0'
+	elif [[ "$1" == 3.3.1 ]]; then node_version='22.18.0'
+	elif [[ "$1" == 3.3.2 ]]; then node_version='22.19.0'
+	elif [[ "$1" == 3.4 ]]; then node_version='22.22.0'
+	elif [[ "$1" == 3.4.1 ]]; then node_version='22.22.1'
+	elif [[ "$1" == 3.5 ]]; then node_version='24.15.0'
+	elif [[ "$1" == 3.5.1 ]]; then node_version='24.15.0'
+	elif [[ "$1" == 3.5.2 ]]; then node_version='24.15.0'
 	fi # End of versions
+}
+
+
+# Use printf to get appropriate version string for comparison
+get_version_string() {
+	printf "%02d%02d%02d" $(echo "$1" | tr '.' ' ');
 }

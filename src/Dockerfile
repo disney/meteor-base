@@ -6,9 +6,9 @@ FROM ubuntu
 # Meteor version to build for; see ../build.sh
 ARG METEOR_VERSION
 
-ENV SCRIPTS_FOLDER /docker
-ENV APP_SOURCE_FOLDER /opt/src
-ENV APP_BUNDLE_FOLDER /opt/bundle
+ENV SCRIPTS_FOLDER=/docker
+ENV APP_SOURCE_FOLDER=/opt/src
+ENV APP_BUNDLE_FOLDER=/opt/bundle
 
 # Install dependencies, based on https://github.com/jshimko/meteor-launchpad/blob/master/scripts/install-deps.sh (only the parts we plan to use)
 ENV DEBIAN_FRONTEND=noninteractive
@@ -25,7 +25,7 @@ RUN curl https://install.meteor.com/?release=$METEOR_VERSION --output /tmp/insta
 	sh /tmp/install-meteor.sh
 
 # Fix permissions warning; https://github.com/meteor/meteor/issues/7959
-ENV METEOR_ALLOW_SUPERUSER true
+ENV METEOR_ALLOW_SUPERUSER=true
 
 
 # Copy entrypoint and dependencies
@@ -39,4 +39,7 @@ RUN cd $SCRIPTS_FOLDER && \
 		meteor npm ci; \
 	fi
 
+RUN set -eu; \
+  NODE_BIN=$(find /root/.meteor -type f -path '*/dev_bundle/bin/node' -print -quit 2>/dev/null); \
+  ln -sf "$NODE_BIN" /usr/local/bin/node
 # No ONBUILD lines, because this is intended to be used by your app’s multistage Dockerfile and you might need control of the sequence of steps using files from this image

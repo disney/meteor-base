@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Versions to build this Docker image for
 meteor_versions=( \
 	'1.9' \
@@ -43,5 +45,44 @@ meteor_versions=( \
 	'2.7.1' \
 	'2.7.2' \
 	'2.7.3' \
-	'2.8.0'
+	'2.8.0' \
+	'2.8.1' \
+	'2.9.0' \
+	'2.9.1' \
+	'2.10.0' \
+	'2.11.0' \
+	'2.12' \
+	'2.13' \
+	'2.13.1' \
+	'2.13.3' \
+	'2.14' \
+	'2.15' \
+	'2.16' \
+	'3.0.1' \
+	'3.0.2' \
+	'3.0.3' \
+	'3.0.4' \
+	'3.1' \
+	'3.1.1' \
+	'3.1.2' \
+	'3.2' \
+	'3.3' \
+	'3.3.1' \
+	'3.3.2' \
+	'3.4' \
+	'3.4.1' \
+	'3.5' \
+	'3.5.1' \
+	'3.5.2'
 )
+
+latest_version="${meteor_versions[*]: -1}"
+
+# Get the array of versions to loop through, either a particular single version passed in or all of the versions listed above
+if [ -n "${CI_VERSION:-}" ]; then
+	versions=( "$CI_VERSION" )
+elif [[ "${1-x}" != x ]]; then
+	versions=( "$1" )
+else
+	versions=( "${meteor_versions[@]}" )
+fi

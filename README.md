@@ -16,10 +16,10 @@ Copy `example/default.dockerfile` (or `example/app-with-native-dependencies.dock
 
 Edit the `Dockerfile` you copied into your project, changing the first line so that the numbers at the end match the version of Meteor of your project. You can find your project’s Meteor version in your app’s `.meteor/release` file.
 
-For example, if your project is running under Meteor 2.8.0:
+For example, if your project is running under Meteor 3.5.2:
 
 ```Dockerfile
-FROM geoffreybooth/meteor-base:2.8.0
+FROM geoffreybooth/meteor-base:3.5.2
 ```
 
 This version must match an available tag from [geoffreybooth/meteor-base](https://hub.docker.com/r/geoffreybooth/meteor-base/tags).
@@ -36,10 +36,10 @@ Copy `example/.dockerignore` to your project’s root and edit it appropriately 
 
 ### Step 4: Build and run
 
-Copy `example/docker-compose.yml` to your project’s root. Then, from the root of your project, run:
+Copy `example/compose.yml` to your project’s root. Then, from the root of your project, run:
 
 ```bash
-docker-compose up
+docker compose up
 ```
 
 This builds an image for your app and starts it, along with a linked container for MongoDB. Go to [http://localhost/](http://localhost/) to see your app running.

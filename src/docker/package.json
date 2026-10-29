@@ -6,6 +6,6 @@
   "author": "Geoffrey Booth",
   "license": "MIT",
   "dependencies": {
-    "mongodb": "^4.3.1"
+    "mongodb": "^4.17.0"
   }
 }
