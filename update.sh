@@ -70,6 +70,11 @@ do_sed "s|${latest_version}|${new_meteor_version}|g" ./example/app-with-native-d
 
 do_sed "s|${latest_version}|${new_meteor_version}|g" ./example/default.dockerfile
 
+# The "expected for Meteor x.y.z" comments can drift from $latest_version, so match any version
+do_sed "s|expected for Meteor [0-9.]*|expected for Meteor ${new_meteor_version}|" ./example/app-with-native-dependencies.dockerfile
+
+do_sed "s|expected for Meteor [0-9.]*|expected for Meteor ${new_meteor_version}|" ./example/default.dockerfile
+
 do_sed $"s|'${latest_version}'|'${latest_version}' \\\\\n	'${new_meteor_version}'|" ./versions.sh
 
 
